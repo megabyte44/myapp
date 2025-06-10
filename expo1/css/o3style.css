@@ -1,0 +1,272 @@
+/* --- General Setup & Theming --- */
+:root {
+    /* Define color variables for a light theme */
+    --background: hsl(0 0% 100%); /* White background */
+    --foreground: hsl(222.2 84% 4.9%); /* Dark text color */
+    --card: hsl(0 0% 100%); /* Card background */
+    --card-foreground: hsl(222.2 84% 4.9%); /* Text color for cards */
+    --popover: hsl(0 0% 100%); /* Popover background */
+    --popover-foreground: hsl(222.2 84% 4.9%); /* Text color for popovers */
+    --primary: hsl(217.2 91.2% 59.8%); /* Primary accent color (blue) */
+    --primary-foreground: hsl(210 40% 98%); /* Text color for primary elements (white) */
+    --secondary: hsl(210 40% 96.1%); /* Secondary background color (light grey) */
+    --secondary-foreground: hsl(222.2 47.4% 11.2%); /* Text color for secondary elements (dark) */
+    --muted: hsl(210 40% 96.1%); /* Muted background color */
+    --muted-foreground: hsl(215.4 16.3% 46.9%); /* Muted text color (medium grey) */
+    --accent: hsl(210 40% 96.1%); /* Accent background color */
+    --accent-foreground: hsl(222.2 47.4% 11.2%); /* Text color for accent elements */
+    --destructive: hsl(0, 84.2%, 60.2%); /* Destructive color (red) */
+    --destructive-foreground: hsl(0 0% 98%); /* Text color for destructive elements */
+    --border: hsl(214.3 31.8% 91.4%); /* Border color */
+    --input: hsl(214.3 31.8% 91.4%); /* Input field background color */
+    --ring: hsl(217.2 91.2% 59.8%); /* Ring color for focus states */
+    --radius: 0.5rem; /* Border-radius for rounded corners */
+    --success: hsl(142.1 76.2% 36.3%); /* Success color (green) */
+}
+
+/* Base styles for the body */
+body {
+    background-color: var(--background);
+    color: var(--foreground); /* Ensure main body text is dark */
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 2rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the top */
+}
+
+/* --- Icons --- */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 2;
+    stroke: currentColor;
+    fill: none;
+    vertical-align: middle;
+}
+.icon-sm { width: 0.8rem; height: 0.8rem; } /* Smaller icons */
+.icon-lg { width: 3rem; height: 3rem; color: var(--primary); margin-bottom: 1rem; } /* Larger icons for headers */
+
+/* --- Layout & Placeholders --- */
+.feature-placeholder { max-width: 1280px; width: 100%; margin: auto; }
+.feature-header { text-align: center; margin-bottom: 2rem; color: var(--foreground); }
+.feature-title { font-size: 2.25rem; font-weight: 700; }
+.feature-description { color: var(--muted-foreground); margin-top: 0.5rem; }
+.grid { display: grid; gap: 1.5rem; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+
+/* Responsive grid columns */
+@media (min-width: 768px) {
+    .md-grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .md-col-span-1 { grid-column: span 1 / span 1; }
+}
+@media (min-width: 1024px) {
+    .lg-grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .lg-col-span-3 { grid-column: span 3 / span 3; }
+}
+
+
+/* --- Card Component --- */
+.card {
+    background-color: var(--card);
+    color: var(--card-foreground); /* Ensure text in cards is visible */
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -2px rgba(0,0,0,0.05);
+}
+.card-header, .card-content, .card-footer { padding: 1.5rem; }
+.card-header { padding-bottom: 1rem; }
+.card-footer { padding-top: 1rem; }
+.card-title { font-size: 1.25rem; font-weight: 600; color: var(--card-foreground); }
+.card-description { color: var(--muted-foreground); font-size: 0.875rem; margin-top: 0.25rem; }
+/* Specific style for workout completion card when completed */
+.card.bg-muted-50 {
+    background-color: hsl(210 40% 96.1% / 0.8); /* Semi-transparent muted background for completed card */
+}
+
+/* --- Button Component --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s, opacity 0.2s;
+    white-space: nowrap; /* Prevent text wrapping in buttons */
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-default { background-color: var(--primary); color: var(--primary-foreground); }
+.btn-default:hover:not(:disabled) { background-color: hsl(217.2 91.2% 59.8% / 0.9); }
+.btn-secondary { background-color: var(--secondary); color: var(--secondary-foreground); border-color: var(--border); }
+.btn-secondary:hover:not(:disabled) { background-color: hsl(210 40% 92.1%); }
+.btn-outline { background-color: transparent; border-color: var(--input); color: var(--foreground); }
+.btn-outline:hover:not(:disabled) { background-color: var(--accent); color: var(--accent-foreground); }
+.btn-ghost { background-color: transparent; border: none; color: var(--foreground); }
+.btn-ghost:hover:not(:disabled) { background-color: var(--accent); color: var(--accent-foreground); }
+.btn-sm { padding: 0.25rem 0.75rem; font-size: 0.8rem; }
+.btn-icon { padding: 0.5rem; width: 2.25rem; height: 2.25rem; } /* Default icon button size */
+.btn-icon.btn-sm { width: 1.75rem; height: 1.75rem; } /* Smaller icon button size */
+.btn-destructive { color: var(--destructive); }
+.btn-destructive:hover:not(:disabled) { background-color: hsl(0, 72.2%, 50.6%); color: var(--destructive-foreground); }
+.btn .icon { margin-right: 0.5rem; }
+.w-full { width: 100%; }
+
+/* --- Input, Select & Label --- */
+.label { font-size: 0.875rem; font-weight: 500; display: block; margin-bottom: 0.5rem; color: var(--foreground); }
+.input, .select {
+    width: 100%;
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    color: var(--foreground); /* Ensure input/select text is visible */
+    border-radius: var(--radius);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    box-sizing: border-box;
+}
+.select { cursor: pointer; }
+.input::placeholder { color: var(--muted-foreground); }
+.input:focus, .select:focus {
+    outline: none;
+    border-color: var(--ring);
+    box-shadow: 0 0 0 1px var(--ring); /* A subtle focus ring */
+}
+/* Style for the dropdown arrow in select */
+.select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+    padding-right: 2.5rem; /* Make space for the custom arrow */
+}
+
+
+/* --- Dialog (Modal) --- */
+.dialog-overlay {
+    position: fixed; inset: 0; background-color: rgba(0,0,0,0.6);
+    z-index: 40; display: none;
+}
+.dialog-content {
+    position: fixed; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    width: 90%; max-width: 600px; /* Increased max-width */
+    z-index: 50; display: none;
+    color: var(--foreground); /* Ensure dialog content text is visible */
+    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+.dialog-body { max-height: 70vh; overflow-y: auto; padding-right: 0.5rem; } /* Scrollable body for dialogs */
+.dialog-header, .dialog-footer { display: flex; flex-direction: column; gap: 0.5rem; }
+.dialog-footer {
+    flex-direction: row; justify-content: flex-end; margin-top: 1.5rem;
+    border-top: 1px solid var(--border); padding-top: 1rem;
+}
+.dialog-title { font-size: 1.25rem; font-weight: 600; color: var(--foreground); }
+.dialog-description { color: var(--muted-foreground); }
+
+/* --- Calendar --- */
+.calendar { border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; width: fit-content; color: var(--foreground); }
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+    margin-bottom: 1rem;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-top: 1rem;
+    text-align: center;
+}
+.calendar-day-name, .calendar-day {
+    width: 2.5rem; height: 2.5rem; display: flex; align-items: center; justify-content: center;
+    font-size: 0.875rem; border-radius: var(--radius);
+    transition: background-color 0.2s, border-color 0.2s, outline-color 0.2s;
+}
+.calendar-day-name { color: var(--muted-foreground); font-weight: 600; }
+.calendar-day { cursor: pointer; border: 1px solid transparent; color: var(--foreground); }
+.calendar-day.other-month { color: var(--muted-foreground); opacity: 0.6; }
+.calendar-day:hover { background-color: var(--accent); }
+.calendar-day.today { background-color: var(--accent); border-color: var(--primary); font-weight: bold; }
+/* Calendar modifiers based on gymtracker.tsx */
+.calendar-day.completed { outline: 2px solid var(--success); } /* Green outline */
+.calendar-day.missed { outline: 2px solid var(--destructive); } /* Red outline */
+
+/* --- Utilities --- */
+.flex { display: flex; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-6 { gap: 1.5rem; }
+.mr-2 { margin-right: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.space-y-2 > *:not([hidden]) ~ *:not([hidden]) { margin-top: 0.5rem; }
+.space-y-3 > *:not([hidden]) ~ *:not([hidden]) { margin-top: 0.75rem; }
+.space-y-6 > *:not([hidden]) ~ *:not([hidden]) { margin-top: 1.5rem; } /* Added for larger gaps */
+.text-destructive { color: var(--destructive); }
+.text-muted-foreground { color: var(--muted-foreground); }
+.text-sm { font-size: 0.875rem; }
+.text-xs { font-size: 0.75rem; }
+.font-semibold { font-weight: 600; }
+.text-center { text-align: center; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; } /* Added for larger padding */
+.bg-muted-50 { background-color: hsl(210 40% 98%); }
+.rounded-md { border-radius: var(--radius); }
+.border { border: 1px solid var(--border); } /* General border utility */
+.border-dashed { border-style: dashed; } /* Dashed border for placeholders */
+hr { border: 0; height: 1px; background-color: var(--border); margin: 1.5rem 0; } /* Adjusted margin for HR */
+
+/* Progress bar styling for better visibility */
+progress {
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: var(--radius);
+    border: none;
+    background-color: var(--input); /* Background of the progress bar track */
+}
+progress::-webkit-progress-bar {
+    background-color: var(--input);
+    border-radius: var(--radius);
+}
+progress::-webkit-progress-value {
+    background-color: var(--primary); /* Color of the progress itself */
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease;
+}
+progress::-moz-progress-bar { /* Style for Firefox */
+    background-color: var(--primary);
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease;
+}
+
+
+/* --- Toast Notification --- */
+#toast-container { position: fixed; bottom: 20px; right: 20px; z-index: 1000; display: flex; flex-direction: column; gap: 10px; }
+.toast {
+    background-color: var(--card); color: var(--foreground); padding: 1rem 1.5rem;
+    border-radius: var(--radius); border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    opacity: 0; transform: translateX(100%);
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    min-width: 250px; /* Give toasts a minimum width */
+    max-width: 350px; /* And a maximum width */
+}
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast-title { font-weight: 600; color: var(--foreground); }
+.toast-description { font-size: 0.875rem; color: var(--muted-foreground); margin-top: 0.25rem; }
+.toast.destructive { border-left: 4px solid var(--destructive); }

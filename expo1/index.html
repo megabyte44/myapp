@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memoria</title>
+
+    <!-- Your main global styles -->    
+    <link rel="stylesheet" href="css/global.css">
+
+    <!-- Styles for EVERY other page -->
+    <link rel="stylesheet" href="css/ostyle.css">
+    <link rel="stylesheet" href="css/o1style.css"> <!-- Assuming this is for To-Do List -->
+    <link rel="stylesheet" href="css/o2style.css"> <!-- Assuming this is for Expense Tracker -->
+    <link rel="stylesheet" href="css/o3style.css"> <!-- Assuming this is for Daily Planner -->
+    <link rel="stylesheet" href="css/o4style.css"> <!-- Assuming this is for Gym Tracker -->
+    <link rel="stylesheet" href="css/o5style.css">
+    <link rel="stylesheet" href="css/o6style.css">
+    <link rel="stylesheet" href="css/o7style.css"><!-- etc. for all your other style files -->
+</head>
+<body>
+    <!-- The sidebar is now OUTSIDE the content container -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="nav-link">
+                <svg class="logo-svg" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-7.53 16.59l1.9-1.9A8 8 0 0 1 19.53 6.47"/><path d="m15.53 9.47-1.06-1.06A4 4 0 0 0 12 9a4 4 0 0 0-3.53 2.47l-1.06-1.06A6 6 0 0 1 12 7a6 6 0 0 1 6 6 6 6 0 0 1-2.47 4.53l-1.06-1.06A4 4 0 0 0 16 13a4 4 0 0 0-2.47-3.53Z"/><path d="M12 17a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"/></svg>
+                <h1>Memoria</h1>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <!-- Note the 'nav-link' class for our JS to find them -->
+                <li><a href="dashboard.html" class="nav-link"><img src="https://lucide.dev/static/icons/layout-dashboard.svg" class="icon" alt="icon"/><span>Dashboard</span></a></li>
+                <li><a href="to-do-list.html" class="nav-link"><img src="https://lucide.dev/static/icons/list-checks.svg" class="icon" alt="icon"/><span>To-Do List</span></a></li>
+                <li><a href="expense-tracker.html" class="nav-link"><img src="https://lucide.dev/static/icons/piggy-bank.svg" class="icon" alt="icon"/><span>Expense Tracker</span></a></li>
+                <li><a href="day-planner.html" class="nav-link"><img src="https://lucide.dev/static/icons/calendar-clock.svg" class="icon" alt="icon"/><span>Daily Planner</span></a></li>
+                <li><a href="gym-tracker.html" class="nav-link"><img src="https://lucide.dev/static/icons/dumbbell.svg" class="icon" alt="icon"/><span>Gym Tracker</span></a></li>
+                <li><a href="password-vault.html" class="nav-link"><img src="https://lucide.dev/static/icons/key-square.svg" class="icon" alt="icon"/><span>Password Vault</span></a></li>
+                <li><a href="secure-note.html" class="nav-link"><img src="https://lucide.dev/static/icons/file-lock-2.svg" class="icon" alt="icon"/><span>Secure Notes</span></a></li>
+                <li><a href="idea-capture.html" class="nav-link"><img src="https://lucide.dev/static/icons/lightbulb.svg" class="icon" alt="icon"/><span>Idea Capture</span></a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer"></div>
+    </aside>
+
+    <!-- The <main> tag IS the content container. This is the ONLY part that will be updated. -->
+    <main id="main-content-container" class="main-content">
+        <!-- The content of dashboard.html will be loaded here by the script -->
+    </main>
+
+    <script src="global.js"></script>
+</body>
+</html>

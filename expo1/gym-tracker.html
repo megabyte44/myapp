@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Tracker</title>
+    <link rel="stylesheet" href="css/o3style.css">
+</head>
+<body>
+
+    <div class="feature-placeholder">
+        <header class="feature-header">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-lg"><path d="M11.42 21.82a1.99 1.99 0 0 0 1.16-3.21l-3.08-2.61a1 1 0 0 1 .53-1.8l3.58.62a2 2 0 0 0 1.4-.33l4.24-2.43a2 2 0 0 0 .97-1.77V10a2 2 0 0 0-1-1.73l-5.42-3.48a2 2 0 0 0-2.12 0L4.42 8.27A2 2 0 0 0 3 10v.48a2 2 0 0 0 .97 1.77l4.24 2.43a2 2 0 0 0 1.4.33l3.58-.62a1 1 0 0 1 .53 1.8l-3.08 2.61a1.99 1.99 0 0 0 1.16 3.21z"/><path d="M14 22V12"/><path d="M9.9 2.2a2 2 0 0 0-1.8 0L2.7 5.7a2 2 0 0 0-1.2 1.8v1.5a2 2 0 0 0 2 2h15a2 2 0 0 0 2-2V7.5a2 2 0 0 0-1.2-1.8L15.7 2.2a2 2 0 0 0-1.8 0z"/></svg>
+            <h1 class="feature-title">Gym Tracker</h1>
+            <p class="feature-description">Plan your workouts, monitor your nutrition, and track your progress.</p>
+        </header>
+
+        <main class="grid lg-grid-cols-3 gap-6">
+            <div class="card lg-col-span-3">
+                <div class="card-header" style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <div>
+                        <h2 class="card-title" id="todays-workout-title">Workout Plan</h2>
+                        <p class="card-description" id="todays-workout-description">Today: Loading...</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="btn btn-outline btn-icon h-8 w-8" id="open-cycle-config-dialog" title="Configure Workout Cycle">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+                        </button>
+                        <button class="btn btn-outline btn-icon h-8 w-8" id="open-workout-plan-dialog" title="Manage Workout Plan">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-content" id="todays-workout-content"></div>
+                <div class="card-footer" id="todays-workout-footer"></div>
+            </div>
+
+            <div class="card lg-col-span-3">
+                 <div class="card-header">
+                    <h2 class="card-title">Workout Log Calendar</h2>
+                    <p class="card-description">Completed workouts: Green outline. Missed: Red outline.</p>
+                </div>
+                <div class="card-content flex justify-center">
+                    <div class="calendar" id="calendar-container"></div>
+                </div>
+            </div>
+
+            <div class="lg-col-span-3 grid md-grid-cols-2 gap-6">
+                <div class="card md-col-span-1">
+                    <div class="card-header">
+                        <h2 class="card-title flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon mr-2" style="color: var(--primary)"><path d="M12.25 19.5c-4.52 0-8.25-3.63-8.25-8.15 0-4.52 3.73-8.15 8.25-8.15s8.25 3.63 8.25 8.15c0 4.1-2.92 7.52-6.75 8.05"/><path d="M12.25 19.75a4.25 4.25 0 0 1-4.25-4.25"/><path d="M12.25 3.25A4.25 4.25 0 0 0 8 7.5"/><path d="M15.5 10a2.75 2.75 0 0 0-2.75 2.75c0 1.52 1.23 2.75 2.75 2.75a2.75 2.75 0 0 0 0-5.5z"/></svg>
+                            Protein Intake
+                        </h2>
+                        <p class="card-description" id="protein-target-description">Target: 0g / 150g</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="mb-4 space-y-2">
+                            <label for="protein-target-input" class="label">Daily Protein Target (g)</label>
+                            <input type="number" id="protein-target-input" class="input" placeholder="e.g., 150" value="150">
+                        </div>
+                        <progress id="protein-progress" value="0" max="100" style="width: 100%; height: 0.5rem;" class="mb-4"></progress>
+                        <div class="flex items-center gap-2 mb-4">
+                            <input type="number" id="protein-amount-input" class="input" placeholder="Protein (g)">
+                            <button class="btn btn-sm btn-default" id="log-protein-btn" title="Log Protein">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="16"/><line x1="8" x2="16" y1="12" y2="12"/></svg>
+                            </button>
+                        </div>
+                        <div id="protein-log-list" class="max-h-40 overflow-y-auto space-y-2"></div>
+                    </div>
+                </div>
+
+                <div class="card md-col-span-1">
+                    <div class="card-header flex justify-between items-center">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon mr-2" style="color: var(--primary);"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-6 2-2-1.44-4-2-6-2a4.91 4.91 0 0 0-5 4.72c0 4.22 3 12.22 6 12.22 1.25 0 2.5-1.06 4-1.06Z"/><path d="M10 2c1 .5 2 2 2 5"/></svg>
+                            <div>
+                                <h2 class="card-title">Food & Supplement Log</h2>
+                                <p class="card-description">Quick log common items for today.</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-icon h-8 w-8" id="open-food-dialog" title="Manage Food Items">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l-.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <div id="quick-log-buttons-container" class="grid grid-cols-2 gap-2 mb-4"></div>
+                        <div id="food-log-list" class="max-h-40 overflow-y-auto space-y-2"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="dialog-overlay" class="dialog-overlay"></div>
+    <div id="cycle-config-dialog" class="dialog-content"></div>
+    <div id="workout-plan-dialog" class="dialog-content"></div>
+    <div id="manage-food-dialog" class="dialog-content"></div>
+    <div id="toast-container"></div>
+
+    <script src="js/o3script.js"></script>
+</body>
+</html>
