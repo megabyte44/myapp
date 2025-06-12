@@ -88,10 +88,12 @@ body {
     height: 20px;
 }
 
-/* Active State for Links */
-.nav-link.active {
-    background-color: #18181b; /* bg-sidebar-primary */
-    color: #fafafa; /* text-sidebar-primary-foreground */
+
+/* CHANGE IT TO THIS */
+.sidebar-nav .nav-link.active {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    color: #fff;
 }
 
 /* --- dashboard Styles --- */
@@ -2603,8 +2605,4 @@ label {
 /* 3. A general reset to make sure no background color is interfering */
 .table-actions .button svg {
     background-color: transparent;
-}
-/* Add this new rule to the end of your style.css file */
-.sidebar-header .nav-link.active {
-    background-color: transparent; /* Or whatever the default sidebar color is */
 }
