@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idea Capture</title>
+    <link rel="stylesheet" href="o4style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="feature-placeholder">
+        <div class="feature-header">
+            <div class="feature-icon-wrapper">
+                <!-- Lightbulb Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
+                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
+                    <path d="M9 18h6"></path>
+                    <path d="M10 22h4"></path>
+                </svg>
+            </div>
+            <h1 class="feature-title">Idea Capture</h1>
+            <p class="feature-description">Jot down your brilliant ideas and organize them for future implementation.</p>
+        </div>
+
+        <div class="feature-content">
+            <div class="content-wrapper">
+                <!-- New Idea Form -->
+                <section class="card shadow-md">
+                    <header class="card-header">
+                        <h2 class="card-title font-headline text-xl">Capture a New Idea</h2>
+                    </header>
+                    <div class="card-content card-form-content">
+                        <input id="new-idea-title" type="text" class="input" placeholder="Idea Title (e.g., Eco-friendly Packaging Solution)">
+                        <textarea id="new-idea-details" class="textarea" rows="4" placeholder="Describe your idea in more detail..."></textarea>
+                        <button id="save-idea-btn" class="btn btn-lg btn-full-width">
+                            <!-- PlusSquare Icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-mr">
+                                <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+                                <path d="M8 12h8"></path>
+                                <path d="M12 8v8"></path>
+                            </svg>
+                            Save Idea
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Idea List -->
+                <section>
+                    <h2 class="list-title font-headline text-2xl">Your Ideas</h2>
+                    <div id="idea-list-container" class="idea-grid">
+                        <!-- Idea cards will be dynamically inserted here by JavaScript -->
+                    </div>
+                    <div id="no-ideas-message" class="empty-state" style="display: none;">
+                        <p>No ideas captured yet. Let your creativity flow!</p>
+                    </div>
+                </section>
+                
+                <!-- Implementation Hub (Conceptual) -->
+                <section class="card shadow-md">
+                    <header class="card-header">
+                        <h2 class="card-title font-headline text-xl">Implementation Hub</h2>
+                        <p class="card-description">Selected ideas ready for development will appear here.</p>
+                    </header>
+                    <div class="card-content">
+                        <p class="placeholder-text">
+                            Transfer ideas to implementation to track their progress from concept to reality.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="o4script.js"></script>
+</body>
+</html>

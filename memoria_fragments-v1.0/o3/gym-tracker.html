@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Tracker</title>
+    <link rel="stylesheet" href="o3style.css">
+</head>
+<body>
+
+    <div id="toast" class="toast"></div>
+
+    <div class="feature-placeholder">
+        <header class="feature-header">
+            <span class="icon-placeholder">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.4 6.2 5 5M6.2 14.4l5 5M12 12l9.6 9.6M2.4 2.4l9.6 9.6M18 11.5 12.5 6M6 18l5.5-5.5"></path></svg>
+            </span>
+            <div>
+                <h1>Gym Tracker</h1>
+                <p>Plan your workouts, monitor your nutrition, and track your progress.</p>
+            </div>
+        </header>
+
+        <div id="loader-container" class="loader-container">
+            <div class="loader"></div>
+            <p>Loading your gym data...</p>
+        </div>
+
+        <main id="main-content" class="main-content hidden">
+            <div class="grid-container">
+
+                <!-- Workout Plan Card -->
+                <div class="card card-span-3" id="workout-card">
+                    <div class="card-header">
+                        <div class="card-title-group">
+                             <span class="icon-placeholder">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                             </span>
+                            <div>
+                                <h2 class="card-title" id="workout-plan-title">Workout Plan - Not Set</h2>
+                                <p class="card-description" id="workout-plan-description">Today (---): ---</p>
+                            </div>
+                        </div>
+                        <div class="card-header-actions">
+                            <button class="button icon-button" id="open-cycle-config-dialog">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                            </button>
+                            <button class="button icon-button" id="open-workout-plan-dialog">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-content" id="workout-exercises-content">
+                        <p class="placeholder-text">Please configure your workout cycle.</p>
+                    </div>
+                    <div class="card-footer" id="workout-footer">
+                        <button class="button w-full" id="toggle-workout-completion-btn" disabled>
+                            <span class="icon-placeholder">
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                            </span>
+                           Mark Today's Workout as Done
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Workout Calendar Card -->
+                <div class="card card-span-3">
+                    <div class="card-header">
+                        <h2 class="card-title">Workout Log Calendar</h2>
+                        <p class="card-description">Completed workouts: Green outline. Missed: Red outline.</p>
+                    </div>
+                    <div class="card-content centered">
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="calendar-prev-month" class="button">&lt;</button>
+                                <h3 id="calendar-month-year"></h3>
+                                <button id="calendar-next-month" class="button">&gt;</button>
+                            </div>
+                            <div class="calendar-grid" id="calendar-grid">
+                                <!-- Calendar days will be generated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Nutrition Section -->
+                <div class="sub-grid card-span-3">
+                    <!-- Protein Intake Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                 <span class="icon-placeholder">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.65 14.12a2.5 2.5 0 0 0-3.3 0L3 20.4a2 2 0 0 0 2.83 2.83l6.23-6.24a.5.5 0 0 0 0-.7l-1.42-1.42a.5.5 0 0 0-.7 0l-1.42 1.41z"></path><path d="m15.5 8.5-1-1a2 2 0 0 0-2.82 0L3 16.17a2 2 0 0 0 0 2.83l1.42 1.41a2 2 0 0 0 2.82 0L18.41 9.2a2 2 0 0 0 0-2.82l-1.1-1.1a2 2 0 0 0-2.81 0z"></path><path d="m20 5-3-3"></path><path d="M17.5 7.5c.28.28.28.72 0 1s-.72.28-1 0c-.28-.28-.28-.72 0-1 .28-.28.72-.28 1 0z"></path></svg>
+                                </span>
+                                <div>
+                                    <h2 class="card-title">Protein Intake</h2>
+                                    <p class="card-description" id="protein-target-description">Target: 0g / 150g</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <div class="form-group">
+                                <label for="proteinTarget">Daily Protein Target (g)</label>
+                                <input id="proteinTarget" type="number" placeholder="e.g., 150" value="150" class="input">
+                            </div>
+                            <div class="progress-bar-container">
+                                <div id="protein-progress-bar" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <div class="input-group">
+                                <input type="number" placeholder="Protein (g)" id="protein-amount-input" class="input">
+                                <button class="button" id="log-protein-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                </button>
+                            </div>
+                            <div class="list-container" id="protein-intake-list">
+                                <p class="placeholder-text">No protein logged yet.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Food & Supplement Log Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                 <span class="icon-placeholder">
+                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path><path d="M10 2c1 .5 2 2 2 5"></path></svg>
+                                </span>
+                                <div>
+                                    <h2 class="card-title">Food & Supplement Log</h2>
+                                    <p class="card-description">Quick log common items for today.</p>
+                                </div>
+                            </div>
+                            <button class="button icon-button" id="open-manage-food-dialog">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <div class="quick-log-grid" id="quick-log-food-grid">
+                                <!-- Quick log buttons generated by JS -->
+                            </div>
+                            <div class="list-container" id="logged-food-list">
+                                <p class="placeholder-text">No food items logged yet for today.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals / Dialogs -->
+    <div id="dialog-overlay" class="dialog-overlay hidden"></div>
+
+    <!-- Cycle Config Dialog -->
+    <div id="cycle-config-dialog" class="dialog hidden">
+        <h2 class="dialog-title">Configure Workout Cycle</h2>
+        <p class="dialog-description">Set the start date and the first day of your current workout cycle.</p>
+        <div class="dialog-content">
+            <div id="cycle-config-error" class="error-message hidden">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                 No workout days defined. Please add cycle days in "Manage Workout Plan" first.
+            </div>
+            <div id="cycle-config-form">
+                <div class="form-group">
+                    <label for="cycle-start-date">Cycle Start Date</label>
+                    <input type="date" id="cycle-start-date" class="input">
+                </div>
+                <div class="form-group">
+                    <label for="cycle-start-day-key">Start Day of Cycle</label>
+                    <select id="cycle-start-day-key" class="input"></select>
+                </div>
+                <p class="help-text">Example: If your cycle restarts with "Day 1" on a Monday, select that Monday as the start date and "Day 1" as the start day.</p>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="button button-outline" id="cancel-cycle-config">Cancel</button>
+            <button class="button" id="save-cycle-config">Save Configuration</button>
+        </div>
+    </div>
+
+    <!-- Manage Workout Plan Dialog -->
+    <div id="workout-plan-dialog" class="dialog hidden">
+        <h2 class="dialog-title">Manage Workout Plan</h2>
+        <p class="dialog-description">Add, remove, or edit cycle days and their exercises.</p>
+        <div class="dialog-content scrollable">
+            <div class="form-section">
+                <h4>Manage Cycle Days</h4>
+                <div class="input-group">
+                    <input type="text" placeholder="New Cycle Day Name (e.g., Push Day)" id="new-cycle-day-name-input" class="input">
+                    <button class="button" id="add-cycle-day-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add Day
+                    </button>
+                </div>
+                <ul class="item-list" id="cycle-days-list"></ul>
+            </div>
+            <hr class="separator">
+            <div id="edit-day-section">
+                <div class="form-group">
+                    <label for="workout-day-select">Select Cycle Day to Edit</label>
+                    <select id="workout-day-select" class="input"></select>
+                </div>
+                <div id="edit-day-form" class="hidden">
+                    <div class="form-group">
+                         <label for="day-title-input" id="day-title-label">Title for Day</label>
+                         <input type="text" id="day-title-input" class="input" placeholder="e.g. Push Day (Chest, Shoulders, Triceps)">
+                    </div>
+                    <hr class="separator">
+                    <h4 id="exercises-for-day-title">Exercises for ...</h4>
+                    <ul class="item-list" id="exercise-list"></ul>
+                    <hr class="separator">
+                    <div class="form-section">
+                        <h5 id="add-exercise-title">Add New Exercise to ...</h5>
+                        <input type="text" placeholder="Exercise Name" id="new-exercise-name" class="input">
+                        <div class="input-grid-2">
+                            <input type="text" placeholder="Sets (e.g., 3-4)" id="new-exercise-sets" class="input">
+                            <input type="text" placeholder="Reps (e.g., 8-12)" id="new-exercise-reps" class="input">
+                        </div>
+                        <button class="button w-full" id="add-exercise-btn">
+                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            Add Exercise
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="button button-outline" id="close-workout-plan-dialog">Close</button>
+        </div>
+    </div>
+
+    <!-- Manage Food Dialog -->
+    <div id="manage-food-dialog" class="dialog hidden">
+        <h2 class="dialog-title">Manage Quick Log Items</h2>
+        <p class="dialog-description">Add or remove items from your quick log list.</p>
+        <div class="dialog-content scrollable">
+            <div class="input-group">
+                <input type="text" placeholder="New item name (e.g., Banana)" id="new-custom-food-item-text" class="input">
+                <button class="button" id="add-custom-food-item-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add
+                </button>
+            </div>
+            <hr class="separator">
+            <p>Current Items:</p>
+            <div class="list-container" id="custom-food-items-list">
+                 <!-- Items will be populated by JS -->
+            </div>
+        </div>
+        <div class="dialog-footer">
+            <button class="button button-outline" id="close-manage-food-dialog">Close</button>
+        </div>
+    </div>
+
+
+    <script src="o3script.js"></script>
+</body>
+</html>

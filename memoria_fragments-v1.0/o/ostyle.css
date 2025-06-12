@@ -1,0 +1,237 @@
+/* --- Base Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* --- Layout --- */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+    .card-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+    .todo-card {
+        grid-column: 1 / -1;
+    }
+}
+
+/* --- Card Styles --- */
+.card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-header .icon {
+    display: inline-flex;
+    color: #333;
+}
+
+.card-header h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+/* --- Plan Card --- */
+.plan-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.plan-item {
+    background-color: #f0f2f5;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+.plan-item .time {
+    font-weight: 600;
+}
+
+.plan-tag {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+    color: #555;
+}
+
+/* --- Finance Card --- */
+.finance-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e9ebee;
+}
+
+.finance-item:last-of-type {
+    border-bottom: none;
+    padding-top: 0.75rem;
+}
+
+.finance-item span {
+    font-size: 0.9rem;
+    color: #606770;
+}
+
+.finance-item .finance-value {
+    font-weight: 600;
+    color: #1c1e21;
+}
+.finance-item .finance-value.expense {
+    color: #d32f2f; /* Using color for semantic meaning, but can be changed to black */
+    color: #000;
+    font-weight: bold;
+}
+.finance-item .finance-value.balance {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.budget-tracker {
+    margin-top: 0.5rem;
+}
+.budget-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #606770;
+    margin-bottom: 0.25rem;
+}
+.progress-bar-container {
+    background-color: #e9ebee;
+    border-radius: 999px;
+    height: 8px;
+    overflow: hidden;
+}
+.progress-bar {
+    background-color: #1c1e21;
+    height: 100%;
+    border-radius: 999px;
+}
+
+/* --- To-Do Card --- */
+.todo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e9ebee;
+}
+.todo-item:last-child {
+    border-bottom: none;
+}
+.todo-item label {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+.todo-item input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: #8a8d91;
+}
+.priority-badge {
+    padding: 0.1rem 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 999px;
+    border: 1px solid #ccc;
+}
+.priority-badge.high {
+    border-color: #1c1e21;
+    font-weight: bold;
+}
+.priority-badge.medium {
+    border-color: #8a8d91;
+}
+
+/* --- Buttons --- */
+.button {
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 6px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.button-outline {
+    background-color: transparent;
+    border: 1px solid #ccd0d5;
+    color: #1c1e21;
+}
+
+.button-outline:hover {
+    background-color: #f0f2f5;
+}
+
+/* --- Floating Action Button --- */
+.fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 56px;
+    height: 56px;
+    background-color: #1c1e21;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+.fab svg {
+    width: 24px;
+    height: 24px;
+}

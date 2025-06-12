@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="o2style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="feature-placeholder">
+        <header class="feature-header">
+            <div class="icon-wrapper">
+                <!-- PiggyBank Icon SVG -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M8 6h9"/><path d="M11 10h5"/><path d="M6 18H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.5"/><path d="M18 12.5a4.5 4.5 0 0 1-9 0 4.5 4.5 0 0 1 9 0Z"/><path d="M16 16.5a1 1 0 0 1-1-1V14a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1.5a1 1 0 0 1-1 1Z"/><path d="M21.4 16.5A2.4 2.4 0 0 0 20 15h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1a2.4 2.4 0 0 0 2.4-2.5Z"/></svg>
+            </div>
+            <h1 class="feature-title">Expense Tracker</h1>
+            <p class="feature-description">Track your income, expenses, and manage your budget.</p>
+        </header>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="loading-container">
+            <!-- Loader2 Icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon animate-spin"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+            <p>Loading financial settings...</p>
+        </div>
+
+        <!-- Main Content (hidden initially) -->
+        <div id="main-content" class="main-content-grid" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Financial Tracking</h2>
+                    <p class="card-description">Monitor your income, expenses, and budget.</p>
+                </div>
+                <div class="card-content">
+                    <div class="stats-grid">
+                        <!-- Stat Cards -->
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <h3 class="stat-card-title">Total Income</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon text-green"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+                            </div>
+                            <div id="total-income" class="stat-card-content text-green">0.00</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <h3 class="stat-card-title">Total Spent</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon text-destructive"><polyline points="22 17 13.5 8.5 8.5 13.5 2 7"/><polyline points="16 17 22 17 22 11"/></svg>
+                            </div>
+                            <div id="total-expenses" class="stat-card-content text-destructive">0.00</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <h3 class="stat-card-title">Monthly Budget</h3>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon text-muted"><path d="M8 6h9"/><path d="M11 10h5"/><path d="M6 18H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.5"/><path d="M18 12.5a4.5 4.5 0 0 1-9 0 4.5 4.5 0 0 1 9 0Z"/><path d="M16 16.5a1 1 0 0 1-1-1V14a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1.5a1 1 0 0 1-1 1Z"/><path d="M21.4 16.5A2.4 2.4 0 0 0 20 15h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1a2.4 2.4 0 0 0 2.4-2.5Z"/></svg>
+                            </div>
+                            <div id="monthly-budget" class="stat-card-content">0.00</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card-header">
+                                <h3 class="stat-card-title">Remaining</h3>
+                            </div>
+                            <div id="remaining-budget" class="stat-card-content text-green">0.00</div>
+                        </div>
+                    </div>
+
+                    <!-- Budget Progress Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Budget Progress</h3>
+                            <p id="budget-description" class="card-description">You've spent 0.00 of your 0.00 budget.</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="progress-bar-container">
+                                <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
+                            </div>
+                            <div id="progress-text" class="progress-text">0%</div>
+                            
+                            <div class="form-section">
+                                <label for="monthly-budget-input" class="label">Set Your Monthly Budget:</label>
+                                <div class="input-group">
+                                    <input id="monthly-budget-input" type="number" placeholder="e.g., 2000.00" class="input">
+                                    <button id="set-budget-btn" class="button">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                                        Set Budget
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Transactions Table Card -->
+                    <div class="card">
+                        <div class="card-header-flex">
+                            <h3 class="card-title">Recent Transactions</h3>
+                            <button id="add-transaction-dialog-btn" class="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                                Add Transaction
+                            </button>
+                        </div>
+                        <div class="card-content">
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th class="text-right">Amount</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="transactions-table-body">
+                                        <!-- Rows will be inserted here by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Transaction Dialog (Modal) -->
+    <div id="transaction-dialog" class="dialog-overlay" style="display: none;">
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h3 class="dialog-title">Add New Transaction</h3>
+                <p class="dialog-description">Enter transaction details. Click save when done.</p>
+            </div>
+            <div class="dialog-body">
+                <div class="form-row">
+                    <label for="new-txn-date" class="label">Date</label>
+                    <input id="new-txn-date" type="date" class="input">
+                </div>
+                <div class="form-row">
+                    <label for="new-txn-description" class="label">Description</label>
+                    <input id="new-txn-description" type="text" placeholder="e.g. Coffee" class="input">
+                </div>
+                <div class="form-row">
+                    <label for="new-txn-amount" class="label">Amount</label>
+                    <input id="new-txn-amount" type="number" placeholder="e.g. 50.00" class="input">
+                </div>
+                <div class="form-row">
+                    <label for="new-txn-category" class="label">Category</label>
+                    <select id="new-txn-category" class="select"></select>
+                </div>
+                <div class="form-row">
+                    <label for="new-txn-type" class="label">Type</label>
+                    <select id="new-txn-type" class="select">
+                        <option value="expense">Expense</option>
+                        <option value="income">Income</option>
+                    </select>
+                </div>
+            </div>
+            <div class="dialog-footer">
+                <button id="cancel-txn-btn" class="button button-outline">Cancel</button>
+                <button id="save-txn-btn" class="button">Save Transaction</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
+    <script src="o2script.js"></script>
+</body>
+</html>

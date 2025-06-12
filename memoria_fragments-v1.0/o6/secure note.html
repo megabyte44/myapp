@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Notes</title>
+    <link rel="stylesheet" href="o6style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="feature-placeholder">
+        <header class="feature-header">
+            <div class="feature-icon-wrapper">
+                <i data-lucide="file-lock-2"></i>
+            </div>
+            <h1 class="feature-title">Secure Notes</h1>
+            <p class="feature-description">
+                Create and manage your private, secure notes. Your notes are stored locally in your browser.
+            </p>
+        </header>
+
+        <div class="content-wrapper">
+            <div class="actions-bar">
+                <button id="add-new-note-btn" class="btn btn-primary btn-lg">
+                    <i data-lucide="plus-circle"></i> Add New Note
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loader" class="placeholder-container">
+                <div class="loader-icon">
+                    <i data-lucide="loader-2"></i>
+                </div>
+                <p>Loading notes...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="placeholder-container hidden">
+                <i data-lucide="notebook-pen" class="empty-state-icon"></i>
+                <p class="empty-state-title">No secure notes yet.</p>
+                <p>Click "Add New Note" to create your first one.</p>
+            </div>
+
+            <!-- Notes Grid -->
+            <div id="notes-grid" class="notes-grid hidden">
+                <!-- Note cards will be dynamically inserted here by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Dialog / Modal for Add/Edit Note -->
+    <div id="dialog-overlay" class="dialog-overlay hidden">
+        <div id="dialog-content" class="dialog-content">
+            <header class="dialog-header">
+                <h2 id="dialog-title" class="dialog-title">Add New Note</h2>
+                <p id="dialog-description" class="dialog-description">
+                    Create a new secure note. It will be saved locally.
+                </p>
+            </header>
+            <form id="note-form" class="dialog-body">
+                <div class="form-group">
+                    <label for="noteTitle" class="form-label">Title</label>
+                    <input type="text" id="noteTitle" placeholder="Note Title" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label for="noteContent" class="form-label">Content</label>
+                    <textarea id="noteContent" placeholder="Your secure note content..." class="form-textarea" rows="6"></textarea>
+                </div>
+            </form>
+            <footer class="dialog-footer">
+                <button id="cancel-btn" type="button" class="btn btn-outline">Cancel</button>
+                <button id="save-btn" type="submit" form="note-form" class="btn btn-primary">Save Note</button>
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+
+    <!-- Lucide Icons Script -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Main Application Script -->
+    <script src="o6script.js"></script>
+</body>
+</html>

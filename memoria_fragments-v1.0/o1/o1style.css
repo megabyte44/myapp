@@ -1,0 +1,481 @@
+/*dayplan-style.css*/
+/* --- Global Styles & Variables --- */
+:root {
+    --background: #ffffff;
+    --foreground: #020817;
+    --card: #ffffff;
+    --card-foreground: #020817;
+    --popover: #ffffff;
+    --popover-foreground: #020817;
+    --primary: #18181b;
+    --primary-foreground: #fafafa;
+    --secondary: #f4f4f5;
+    --secondary-foreground: #18181b;
+    --muted: #f4f4f5;
+    --muted-foreground: #71717a;
+    --accent: #f4f4f5;
+    --accent-foreground: #18181b;
+    --destructive: #ef4444;
+    --destructive-foreground: #fafafa;
+    --border: #e4e4e7;
+    --input: #e4e4e7;
+    --ring: #18181b;
+    --radius: 0.5rem;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 2rem;
+}
+
+/* --- Feature Placeholder & Header --- */
+.feature-placeholder {
+    max-width: 1280px;
+    margin: auto;
+}
+
+.feature-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    margin: 0 auto 1rem;
+}
+
+.icon-wrapper .lucide-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.feature-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.feature-description {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* --- Loader --- */
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 16rem; /* 256px */
+}
+
+.loading-container p {
+    margin-left: 0.5rem;
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* --- Main Layout & Card --- */
+.main-content-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.card {
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background-color: var(--card);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.card-content {
+    padding: 1.5rem;
+}
+
+/* --- Forms & Inputs --- */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--card-foreground);
+}
+
+.input, .select {
+    width: 100%;
+    height: 40px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--input);
+    border-radius: calc(var(--radius) - 2px);
+    background-color: var(--background);
+    font-size: 0.875rem;
+    box-sizing: border-box;
+}
+
+.input:focus, .select:focus {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+}
+
+.form-section {
+    border-top: 1px solid var(--border);
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.section-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* --- Buttons --- */
+.button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: calc(var(--radius) - 2px);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    width: 100%;
+}
+
+.button:hover {
+    background-color: rgba(24, 24, 27, 0.9);
+}
+
+.button-outline {
+    background-color: transparent;
+    border-color: var(--border);
+    color: var(--accent-foreground);
+}
+
+.button-outline:hover {
+    background-color: var(--accent);
+}
+
+.button-ghost {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 28px;
+    height: 28px;
+}
+.button-ghost:hover {
+    background-color: var(--accent);
+}
+
+.button .lucide-icon {
+    margin-right: 0.5rem;
+    width: 16px;
+    height: 16px;
+}
+
+/* --- Schedule List --- */
+.schedule-list-container {
+    margin-bottom: 1.5rem;
+    max-height: 24rem; /* 384px */
+    overflow-y: auto;
+    padding-right: 0.5rem;
+    space-y: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background-color: rgba(244, 244, 245, 0.5); /* secondary/50 */
+    border-radius: calc(var(--radius) - 2px);
+    font-size: 0.875rem;
+}
+
+.schedule-item-details .time {
+    font-weight: 600;
+}
+
+.schedule-item-tag {
+    margin-left: 0.5rem;
+    font-size: 0.75rem;
+    padding: 2px 6px;
+    border-radius: 9999px;
+    background-color: rgba(24, 24, 27, 0.2);
+    color: var(--primary);
+}
+
+.delete-btn {
+    color: var(--destructive);
+}
+.delete-btn .lucide-icon {
+    width: 16px;
+    height: 16px;
+}
+
+.empty-list-message {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    text-align: center;
+    padding: 1rem 0;
+}
+
+/* --- Checkbox & Tooltip --- */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary);
+}
+
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip-content {
+    visibility: hidden;
+    width: 250px;
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    text-align: left;
+    border-radius: var(--radius);
+    padding: 0.75rem;
+    position: absolute;
+    z-index: 10;
+    bottom: 125%;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.tooltip-container:hover .tooltip-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-content p {
+    margin: 0 0 0.5rem 0;
+}
+.tooltip-content p:last-child {
+    margin-bottom: 0;
+}
+.tooltip-note {
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    margin-top: 0.25rem !important;
+}
+
+/* --- Dialog (Modal) --- */
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+}
+
+.dialog-content {
+    background-color: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    width: 90%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+}
+
+.dialog-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.dialog-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.dialog-description {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-top: 0.5rem;
+}
+
+.dialog-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    max-height: 70vh;
+}
+
+.subsection-title {
+    font-size: 1rem;
+    font-weight: 600;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0 1rem 0;
+}
+.dialog-body .form-section .subsection-title {
+    margin-top: 0;
+}
+
+.dialog-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* --- Toast Notifications --- */
+#toast-container {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.toast {
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    border-radius: var(--radius);
+    padding: 1rem;
+    width: 350px;
+    animation: toast-in 0.3s ease-out;
+}
+
+.toast.toast-out {
+    animation: toast-out 0.3s ease-in forwards;
+}
+
+.toast.destructive {
+    background-color: var(--destructive);
+    color: var(--destructive-foreground);
+    border-color: var(--destructive);
+}
+.toast.destructive .toast-description {
+     color: rgba(250, 250, 250, 0.9);
+}
+
+.toast-title {
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+}
+
+.toast-description {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin: 0;
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+
+/* --- Responsive Styles --- */
+@media (min-width: 640px) { /* sm breakpoint */
+    .form-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .button {
+        width: auto;
+    }
+}
+
+@media (min-width: 1024px) { /* lg breakpoint */
+    .main-content-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .card {
+        grid-column: span 3 / span 3;
+    }
+}
