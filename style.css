@@ -2604,3 +2604,7 @@ label {
 .table-actions .button svg {
     background-color: transparent;
 }
+/* Add this new rule to the end of your style.css file */
+.sidebar-header .nav-link.active {
+    background-color: transparent; /* Or whatever the default sidebar color is */
+}
