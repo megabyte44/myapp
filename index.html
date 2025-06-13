@@ -65,7 +65,7 @@
                     </div>
                     <div class="card-content">
                         <ul class="plan-list" id="plan-list-container"></ul>
-                        <a href="#" class="button button-outline">View Full Planner</a>
+                        <button class="button button-outline" id="view-planner-btn">View Full Planner</button>
                     </div>
                 </div>
                 <!-- Financial Snapshot Card -->
@@ -81,7 +81,7 @@
                             <div class="budget-header"><span>Budget Usage (Monthly)</span><span id="budget-usage-text">0.00 / 0.00</span></div>
                             <div class="progress-bar-container"><div class="progress-bar" id="budget-progress-bar" style="width: 0%;"></div></div>
                         </div>
-                        <a href="#" class="button button-outline">View Full Tracker</a>
+                        <button class="button button-outline" id="view-tracker-btn">View Full Tracker</button>
                     </div>
                 </div>
                 <!-- To-Do List Card -->
@@ -92,13 +92,14 @@
                     </div>
                     <div class="card-content">
                         <div class="todo-list" id="todo-list-container"></div>
-                        <a href="#" class="button button-outline">View All Tasks</a>
+                       <button class="button button-outline" id="view-tasks-btn">View All Tasks</button>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Floating Action Button -->
-        <a href="#" class="fab" aria-label="Quick Idea Capture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></a>
+       <button class="fab" id="fab-quick-idea" aria-label="Quick Idea Capture"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+        </button>
     </script>
     
     <!-- Template for: to-do list.html -->
