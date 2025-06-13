@@ -1539,7 +1539,8 @@ body {
 
 .idea-grid {
     display: grid;
-    grid-template-columns: 1fr;
+    /* This is the new magic rule! */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
@@ -2605,4 +2606,528 @@ label {
 /* 3. A general reset to make sure no background color is interfering */
 .table-actions .button svg {
     background-color: transparent;
+}
+/* --- APP SHELL & SIDEBAR (NEW) --- */
+.app-container {
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-right: 1px solid #e4e4e7;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 20;
+}
+
+.main-wrapper {
+    flex-grow: 1;
+    margin-left: 250px; /* Offset for the fixed sidebar */
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 3.5rem;
+    padding: 0 1.5rem;
+    border-bottom: 1px solid #e4e4e7;
+    background-color: #ffffff;
+}
+
+.sidebar-trigger {
+    display: none; /* Shown on mobile */
+}
+
+.sidebar-header {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sidebar-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.sidebar-nav {
+    padding: 0.5rem;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+}
+.nav-link svg {
+    margin-right: 0.75rem;
+    width: 20px;
+    height: 20px;
+}
+
+/* User-specified modification for active link */
+.sidebar-nav .nav-link.active {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    color: #fff;
+}
+
+
+/* --- DASHBOARD & WIDGET COMPONENTS (NEW) --- */
+.card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+@media (min-width: 1024px) {
+    .card-grid {
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.stats-grid { 
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1rem; 
+}
+@media (min-width: 1024px) { 
+    .stats-grid { grid-template-columns: repeat(4, 1fr); } 
+}
+
+.stat-card { 
+    padding: 1rem; 
+    border: 1px solid var(--border); 
+    border-radius: calc(var(--radius) - 2px); 
+}
+
+.stat-card-title {
+    font-size: 0.875rem; 
+    font-weight: 500; 
+}
+.stat-card-content { 
+    font-size: 1.875rem; 
+    font-weight: 700; 
+}
+.text-green { color: #22c55e; }
+
+/* Budget / Progress Bar */
+.budget-tracker { margin-top: 0.5rem; }
+.budget-header { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 0.25rem; }
+.progress-bar-container { background-color: #e9ebee; border-radius: 999px; height: 8px; overflow: hidden; }
+.progress-bar { background-color: #1c1e21; height: 100%; border-radius: 999px; }
+
+/* Finance List */
+.finance-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.75rem; border-bottom: 1px solid #e9ebee; }
+.finance-item:last-of-type { border-bottom: none; }
+.finance-item .finance-value.expense { color: #d32f2f; font-weight: bold; }
+.finance-item .finance-value.balance { font-size: 1.5rem; font-weight: bold; }
+
+/* Day Plan List */
+.plan-list { list-style: none; padding: 0; margin: 0 0 1rem 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.plan-item { background-color: #f0f2f5; padding: 0.75rem 1rem; border-radius: 6px; }
+.plan-item .time { font-weight: 600; }
+.plan-tag { display: inline-block; margin-left: 0.5rem; padding: 0.1rem 0.5rem; font-size: 0.75rem; border-radius: 999px; border: 1px solid #ccc; }
+
+/* To-do List Item */
+.todo-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem; border-bottom: 1px solid #e9ebee; }
+.todo-item:last-child { border-bottom: none; }
+.todo-item label { flex-grow: 1; cursor: pointer; }
+.todo-item input[type="checkbox"]:checked + label { text-decoration: line-through; color: #8a8d91; }
+.priority-badge { padding: 0.1rem 0.6rem; font-size: 0.75rem; font-weight: 500; border-radius: 999px; border: 1px solid #ccc; }
+.priority-badge.high { border-color: #1c1e21; font-weight: bold; }
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 56px;
+    height: 56px;
+    background-color: #1c1e21;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+.fab svg { width: 24px; height: 24px; }
+
+
+/* --- TABLE STYLES (NEW) --- */
+.table-container { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+th { font-weight: 500; color: var(--muted-foreground); }
+tbody tr:last-child td { border-bottom: none; }
+.text-right { text-align: right; }
+.text-center { text-align: center; }
+.font-medium { font-weight: 500; }
+.table-actions { display: flex; justify-content: center; gap: 0.25rem; }
+
+
+/* --- NEW BADGE VARIANTS --- */
+.badge-income { background-color: #dcfce7; color: #166534; }
+.badge-expense { background-color: #fee2e2; color: #991b1b; }
+.badge-high { background-color: var(--priority-high, #ef4444); color: white; }
+.badge-medium { background-color: var(--priority-medium, #f59e0b); color: white; }
+.badge-low { background-color: var(--priority-low, #22c55e); color: white; }
+
+
+/* --- DIALOG / MODAL COMPONENT (NEW & MODIFIED) --- */
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+.dialog-content {
+    background-color: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    width: 90%;
+    max-width: 520px;
+    /* User-specified fix for scrolling */
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh;
+    overflow: hidden;
+}
+.dialog-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.dialog-title { font-size: 1.25rem; font-weight: 700; margin: 0; }
+.dialog-description { color: var(--muted-foreground); margin: 0.5rem 0 0; }
+.dialog-body {
+    padding: 1.5rem;
+    /* User-specified fix for scrolling */
+    flex-grow: 1;
+    overflow-y: auto;
+}
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+
+/* --- CALENDAR COMPONENT (NEW) --- */
+.calendar-container {
+    border: 1px solid #ddd;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 350px;
+}
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+.calendar-day, .calendar-day-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    font-size: 0.875rem;
+}
+.calendar-day-header { font-weight: 600; color: #555; }
+.calendar-day { cursor: pointer; border-radius: 0.25rem; }
+.calendar-day:not(.empty):hover { background-color: #f0f0f0; }
+.calendar-day.other-month { color: #aaa; }
+.calendar-day.today { background-color: #000; color: #fff; font-weight: bold; }
+.calendar-day.completed { outline: 2px solid #28a745; }
+.calendar-day.missed { outline: 2px solid #dc3545; }
+
+
+/* --- BUTTON ICON & COLOR FIX (MODIFIED) --- */
+.button .lucide-icon, .button svg {
+    stroke: currentColor; 
+}
+.button.text-destructive {
+    color: var(--destructive, #ef4444);
+}
+.button.text-destructive:hover {
+    color: #dc2626; /* Darker red for hover */
+    background-color: #fee2e2;
+}
+/* --- FIX FOR IDEA CAPTURE DESTRUCTIVE BUTTON --- */
+/* This targets the destructive button specifically within the idea capture feature */
+#idea-capture-page .button.button-destructive {
+    background-color: var(--destructive, #ef4444); /* Use destructive color variable, fallback to red */
+    color: var(--destructive-foreground, #ffffff); /* Use foreground color, fallback to white */
+    border-color: transparent;
+}
+
+#idea-capture-page .button.button-destructive:hover {
+    background-color: #dc2626; /* A slightly darker red for hover */
+}
+
+/* This ensures the icon inside the button also gets the correct color */
+#idea-capture-page .button.button-destructive .button-icon {
+    color: var(--destructive-foreground, #ffffff);
+}
+
+/* ========================================= */
+/*  MOBILE-FRIENDLY IDEA CARD STYLES         */
+/* ========================================= */
+
+/* This rule applies only when the screen width is 767px or less (i.e., tablets and phones) */
+@media (max-width: 767px) {
+
+  /* Target the footer of the idea cards */
+  #idea-capture-page .card-footer {
+    flex-direction: column; /* This is the key: it stacks the buttons vertically */
+    align-items: stretch;    /* This makes each button expand to the full width of the card */
+    gap: 0.75rem;            /* This adds a nice bit of space between the stacked buttons */
+  }
+
+  /* Just in case, ensure each button is treated as a full-width block */
+  #idea-capture-page .card-footer .button {
+    width: 100%;
+    margin: 0; /* Reset any horizontal margins they might have had */
+  }
+}
+
+/* ========================================= */
+/*  HORIZONTAL SCROLLING IDEA ROW          */
+/* ========================================= */
+
+/* This is the container for the row */
+#idea-capture-page .ideas-grid {
+  display: flex;              /* Turns the container into a flexible row */
+  overflow-x: auto;           /* Adds a horizontal scrollbar ONLY when needed */
+  gap: 1.5rem;                /* Sets the space between the cards */
+  padding-bottom: 1.5rem;     /* Adds space below the cards for the scrollbar */
+  /* This makes the scrollbar "snap" to the start of a card, which is nice on touch devices */
+  scroll-snap-type: x mandatory; 
+}
+
+/* This styles each individual card inside the row */
+#idea-capture-page .ideas-grid > .card {
+  /* This is the key: Don't grow, don't shrink, and have a base width of 320px */
+  flex: 0 0 320px;
+  scroll-snap-align: start; /* Aligns the card to the start of the view when snapping */
+}
+
+/* --- OPTIONAL: Prettier Scrollbar for the Idea Row --- */
+#idea-capture-page .ideas-grid::-webkit-scrollbar {
+  height: 8px; /* Makes the scrollbar thinner */
+}
+
+#idea-capture-page .ideas-grid::-webkit-scrollbar-track {
+  background: var(--secondary, #f1f1f1); /* Light grey track */
+  border-radius: 10px;
+}
+
+#idea-capture-page .ideas-grid::-webkit-scrollbar-thumb {
+  background: var(--primary, #888); /* Darker grey handle */
+  border-radius: 10px;
+}
+
+#idea-capture-page .ideas-grid::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Even darker on hover */
+}
+
+/* ========================================= */
+/*  SIDEBAR TOGGLE STYLES                    */
+/* ========================================= */
+
+/* --- 1. Basic Setup & Animation --- */
+
+/* Make the sidebar and main content animate smoothly */
+.sidebar, .main-wrapper, .sidebar-title-text, .sidebar-header .nav-link {
+    transition: all 0.25s ease-in-out;
+}
+
+/* --- 2. The Toggle Button --- */
+.sidebar-trigger {
+    display: block; /* Make it visible */
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 0;
+    margin-right: 0.75rem; /* Space between button and logo */
+}
+
+.sidebar-trigger:hover {
+    color: #000;
+}
+
+/* --- 3. Collapsed State --- */
+/* These rules apply ONLY when the body has the .sidebar-collapsed class */
+
+/* Shrink the sidebar and the content's margin */
+body.sidebar-collapsed .sidebar {
+    width: 72px;
+}
+body.sidebar-collapsed .main-wrapper {
+    margin-left: 72px;
+}
+
+/* Hide the "Memoria" text */
+body.sidebar-collapsed .sidebar-title-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    margin-left: -10px; /* Helps the fade-out effect */
+}
+
+/* Hide the text in the navigation links */
+body.sidebar-collapsed .sidebar-nav .nav-link span {
+    display: none;
+}
+
+/* Center the icons and remove their right margin when collapsed */
+body.sidebar-collapsed .sidebar-nav .nav-link {
+    justify-content: center;
+}
+body.sidebar-collapsed .sidebar-nav .nav-link svg,
+body.sidebar-collapsed .sidebar-nav .nav-link ion-icon {
+    margin-right: 0;
+}
+
+/* --- 4. Mobile Responsiveness --- */
+/* For screens 768px and smaller */
+@media (max-width: 768px) {
+    /* By default, the sidebar is collapsed on mobile */
+    .sidebar {
+        width: 72px;
+    }
+    .main-wrapper {
+        margin-left: 72px;
+    }
+    .sidebar-title-text,
+    .sidebar-nav .nav-link span {
+        display: none;
+    }
+    .sidebar-nav .nav-link {
+        justify-content: center;
+    }
+    .sidebar-nav .nav-link svg,
+    .sidebar-nav .nav-link ion-icon {
+        margin-right: 0;
+    }
+
+    /* When OPEN on mobile, make it cover more space */
+    body.sidebar-open-mobile .sidebar {
+        width: 250px;
+    }
+    /* Show the text when it's open */
+    body.sidebar-open-mobile .sidebar-title-text,
+    body.sidebar-open-mobile .sidebar-nav .nav-link span {
+        display: inline-block; /* Or block, depending on original style */
+        opacity: 1;
+        width: auto;
+    }
+    /* Re-align items to the left when open */
+    body.sidebar-open-mobile .sidebar-nav .nav-link {
+        justify-content: flex-start;
+    }
+    body.sidebar-open-mobile .sidebar-nav .nav-link svg,
+    body.sidebar-open-mobile .sidebar-nav .nav-link ion-icon {
+        margin-right: 0.75rem;
+    }
+}
+
+/* --- 3. Collapsed State --- */
+/* These rules apply ONLY when the body has the .sidebar-collapsed class */
+
+/* Shrink the sidebar and the content's margin */
+body.sidebar-collapsed .sidebar {
+    width: 72px;
+}
+body.sidebar-collapsed .main-wrapper {
+    margin-left: 72px;
+}
+
+/* === ADD THIS NEW RULE HERE === */
+body.sidebar-collapsed .sidebar-header {
+    justify-content: center;
+}
+/* === END OF NEW RULE === */
+
+
+/* Hide the "Memoria" text */
+body.sidebar-collapsed .sidebar-title-text {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    margin-left: -10px; /* Helps the fade-out effect */
+}
+/* ================================================= */
+/*  IDEA CAPTURE PAGE LAYOUTS (FINAL)                */
+/* ================================================= */
+
+/* --- 1. HORIZONTAL ROW for the IMPLEMENTATION HUB --- */
+
+/* The container for the horizontal row */
+#implemented-ideas-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding-bottom: 1.5rem; /* Space for the scrollbar */
+  scroll-snap-type: x mandatory;
+}
+
+/* Each card inside the horizontal row */
+#implemented-ideas-grid > .card {
+  flex: 0 0 320px; /* Don't grow, don't shrink, base width of 320px */
+  scroll-snap-align: start;
+}
+
+
+/* --- 2. STANDARD GRID for the 'YOUR IDEAS' Section --- */
+
+/* This is the default style for MOBILE (one column) */
+#ideas-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* 1 column by default */
+    gap: 1.5rem;
+}
+
+/* For screens 768px and wider (TABLETS), switch to 2 columns */
+@media (min-width: 768px) {
+    #ideas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* For screens 1024px and wider (DESKTOPS), switch to 3 columns */
+@media (min-width: 1024px) {
+    #ideas-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
