@@ -120,6 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     initializeIdeaCapturePage();
                     break;
             }
+           if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         } else {
             mainContent.innerHTML = `<p style="color: red;">Error: Page template with ID "${pageId}" not found.</p>`;
         }
@@ -143,7 +146,39 @@ document.addEventListener('DOMContentLoaded', () => {
         initialLink.classList.add('active');
         loadPage('dashboard-page');
     }
-});
+        // --- INITIAL PAGE LOAD ---
+    // (Your existing initial page load code is here)
+
+
+    // ===================================
+    //  SIDEBAR TOGGLE LOGIC (NEW)
+    // ===================================
+    const sidebarToggleBtn = document.querySelector('.sidebar-trigger');
+    
+    if (sidebarToggleBtn) {
+        sidebarToggleBtn.addEventListener('click', () => {
+            // On mobile, we use a special class to open it
+            if (window.innerWidth <= 768) {
+                document.body.classList.toggle('sidebar-open-mobile');
+            } else {
+                // On desktop, we use the collapsed class
+                document.body.classList.toggle('sidebar-collapsed');
+            }
+        });
+    }
+
+    // This handles closing the sidebar when a nav link is clicked on mobile
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 768) {
+                document.body.classList.remove('sidebar-open-mobile');
+            }
+        });
+    });
+
+}); // This is the closing parenthesis of your existing DOMContentLoaded listener
+
+
 
 
 // ==========================================================
@@ -2746,214 +2781,246 @@ function initializeSecureNotePage() {
 }
 
 /**
- * Initializes all functionality for the Idea Capture page.
+ * =================================================================
+ *  INITIALIZE: IDEA CAPTURE & HUB PAGE
+ * =================================================================
+ * All the code for the Idea Capture feature is contained here.
  */
-
-
 function initializeIdeaCapturePage() {
-    console.log("Initializing Idea Capture Page...");
+    console.log("Initializing Idea Capture & Hub Page...");
 
     // --- 1. CONSTANTS & STATE VARIABLES ---
-    const LOCAL_STORAGE_KEY_IDEAS = 'memoriaAppIdeas';
-    const initialSampleIdeas = [
-        { id: "idea1", title: "New Mobile App for Local Artists", status: "New", details: "An app to connect local artists with buyers and event organizers." },
-        { id: "idea2", title: "AI-Powered Recipe Generator", status: "Exploring", details: "Generates recipes based on available ingredients and dietary preferences." },
-        { id: "idea3", title: "Community Garden Project", status: "New", details: "Start a shared garden space in the neighborhood." },
-    ];
-    let ideas = []; // Start with an empty array; loadIdeas() will populate it.
+    const LOCAL_STORAGE_KEYS = {
+        ideas: 'ideaHubApp_ideas',
+        implemented: 'ideaHubApp_implementedIdeas'
+    };
+    let ideas = [];
+    let implementedIdeas = [];
     let editingIdeaId = null;
 
-    // --- 2. HELPER FUNCTIONS for Saving and Loading ---
-    const saveIdeas = () => {
-        try {
-            console.log("%c ACTION: Saving ideas...", "color: blue; font-weight: bold;");
-            console.log("DATA BEING SAVED:", ideas);
-            localStorage.setItem(LOCAL_STORAGE_KEY_IDEAS, JSON.stringify(ideas));
-            console.log("%c SUCCESS: Ideas saved to localStorage.", "color: green;");
-        } catch (e) {
-            console.error("CRITICAL ERROR in saveIdeas:", e);
-        }
-    };
-
-    const loadIdeas = () => {
-        try {
-            const storedIdeas = localStorage.getItem(LOCAL_STORAGE_KEY_IDEAS);
-            if (storedIdeas) {
-                console.log("FOUND stored data:");
-                ideas = JSON.parse(storedIdeas);
-                
-            } else {
-                console.log("INFO: No saved ideas found. Using initial sample data.");
-                ideas = [...initialSampleIdeas];
-            }
-        } catch (e) {
-            console.error("CRITICAL ERROR in loadIdeas:", e);
-            ideas = [...initialSampleIdeas];
-        }
-    };
-
-    // --- 3. DOM ELEMENT REFERENCES ---
+    // --- 2. DOM ELEMENT REFERENCES ---
+    const ideasGrid = document.getElementById("ideas-grid");
+    const implementedIdeasGrid = document.getElementById("implemented-ideas-grid");
     const newIdeaTitleInput = document.getElementById("new-idea-title");
     const newIdeaDetailsInput = document.getElementById("new-idea-details");
+    const newIdeaTagsInput = document.getElementById("new-idea-tags");
     const saveIdeaBtn = document.getElementById("save-idea-btn");
-    const ideaListContainer = document.getElementById("idea-list-container");
-    const noIdeasMessage = document.getElementById("no-ideas-message");
+    const cancelEditBtn = document.getElementById("cancel-edit-btn");
+    const hubEmptyState = document.getElementById("hub-empty-state");
+    const ideasEmptyState = document.getElementById("ideas-empty-state");
+    const formCard = document.getElementById("idea-form-card");
+    const formTitle = document.getElementById("form-title");
 
-    // --- 4. CORE LOGIC FUNCTIONS ---
-
-    // Add this new function in your CORE LOGIC section
-
-const startEditingIdea = (ideaId) => {
-    // Find the specific idea object from our main 'ideas' array
-    const ideaToEdit = ideas.find(idea => idea.id === ideaId);
-    if (!ideaToEdit) {
-        console.error("Could not find idea to edit:", ideaId);
-        return;
-    }
-
-    // --- Remember that we are now in "edit mode" for this idea ---
-    editingIdeaId = ideaId;
-
-    // --- Fill the form with the existing idea's data ---
-    newIdeaTitleInput.value = ideaToEdit.title;
-    newIdeaDetailsInput.value = ideaToEdit.details;
-
-    // --- Update the button to show we are editing ---
-    saveIdeaBtn.textContent = "Update Idea";
-
-    // --- Scroll the user to the top of the page so they can see the form ---
-    newIdeaTitleInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-};
-
-    const createIdeaCardHTML = (idea) => {
-        const badgeClass = idea.status === "New" ? "badge bg-accent" : "badge variant-secondary";
-        // We add data-id to the article tag to easily identify which card was clicked.
-        return `
-            <article class="card shadow-md" data-id="${idea.id}">
-                <header class="card-header">
-                    <div class="flex-between">
-                        <h3 class="card-title font-headline">${idea.title}</h3>
-                        <span class="${badgeClass}">${idea.status}</span>
-                    </div>
-                </header>
-                <div class="card-content">
-                    <p class="text-sm text-muted-foreground line-clamp-3">${idea.details}</p>
-                </div>
-                <footer class="card-footer">
-                    <button class="btn btn-outline btn-edit">Edit</button>
-                    <button class="btn btn-destructive btn-delete">Delete</button>
-                </footer>
-            </article>
-        `;
+    // --- 3. HELPER FUNCTIONS ---
+    const refreshIcons = () => {
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     };
 
-    const renderIdeas = () => {
-        ideaListContainer.innerHTML = "";
-        if (ideas.length === 0) {
-            noIdeasMessage.style.display = "block";
-            ideaListContainer.style.display = "none";
+    const saveState = () => {
+        try {
+            localStorage.setItem(LOCAL_STORAGE_KEYS.ideas, JSON.stringify(ideas));
+            localStorage.setItem(LOCAL_STORAGE_KEYS.implemented, JSON.stringify(implementedIdeas));
+            console.log("State saved to localStorage.");
+        } catch (e) {
+            console.error("Failed to save state to localStorage:", e);
+        }
+    };
+
+    const loadState = () => {
+        // [THE FIX IS HERE] Make sure these variables are always declared at the top of the function.
+        const storedIdeasJSON = localStorage.getItem(LOCAL_STORAGE_KEYS.ideas);
+        const storedImplementedJSON = localStorage.getItem(LOCAL_STORAGE_KEYS.implemented);
+        
+        const initialSampleIdeas = [
+            { id: `idea-${Date.now() + 1}`, title: "New Mobile App for Local Artists", status: "New", details: "An app to connect local artists with buyers and event organizers.", createdAt: new Date(Date.now() - 86400000 * 2).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 1).toISOString(), tags: ["app", "community", "art"] },
+            { id: `idea-${Date.now() + 2}`, title: "AI-Powered Recipe Generator", status: "Exploring", details: "Generates recipes based on available ingredients and dietary preferences.", createdAt: new Date(Date.now() - 86400000 * 5).toISOString(), updatedAt: new Date(Date.now() - 86400000 * 3).toISOString(), tags: ["ai", "food", "tech"] },
+        ];
+
+        if (storedIdeasJSON === null) {
+            ideas = initialSampleIdeas;
         } else {
-            noIdeasMessage.style.display = "none";
-            ideaListContainer.style.display = "grid";
-            ideas.forEach(idea => {
-                const cardHTML = createIdeaCardHTML(idea);
-                ideaListContainer.innerHTML += cardHTML;
-            });
+            try {
+                ideas = JSON.parse(storedIdeasJSON);
+            } catch (e) {
+                console.error("Could not parse 'ideas' from localStorage. Resetting to sample data.", e);
+                ideas = initialSampleIdeas;
+            }
+        }
+        if (storedImplementedJSON === null) {
+            implementedIdeas = [];
+        } else {
+            try {
+                implementedIdeas = JSON.parse(storedImplementedJSON);
+            } catch (e) {
+                console.error("Could not parse 'implementedIdeas' from localStorage. Resetting to empty.", e);
+                implementedIdeas = [];
+            }
         }
     };
 
-   // Replace your old handleSaveIdea function with this one
+    const formatDate = (isoString) => new Date(isoString).toLocaleString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' });
+    const getStatusBadgeClass = (status) => ({ "New": "badge-default", "Exploring": "badge-secondary", "In Hub": "badge-outline" })[status] || "badge-default";
+    
+    const showToast = (title, description, variant = 'default') => {
+        const container = document.getElementById('toast-container');
+        if (!container) return; // Add safety check
+        const toast = document.createElement('div');
+        toast.className = `toast ${variant}`;
+        toast.innerHTML = `<div class="toast-title">${title}</div><div class="toast-description">${description}</div>`;
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            toast.addEventListener('transitionend', () => toast.remove());
+        }, 4000);
+    };
 
-const handleSaveIdea = () => {
-    const title = newIdeaTitleInput.value.trim();
-    const details = newIdeaDetailsInput.value.trim();
+    // --- 4. CORE LOGIC (RENDERING & ACTIONS) ---
+  const createIdeaCardHTML = (idea, isInHub = false) => {
+    const tagsHTML = (idea.tags && idea.tags.length > 0) ? `<div class="tags-container">${idea.tags.map(tag => `<span class="badge badge-secondary">${tag}</span>`).join('')}</div>` : '';
 
-    if (!title) {
-        alert("Please enter an idea title.");
-        return;
-    }
+    // This is the logic we are fixing.
+    // If the card is NOT in the hub, it creates the "Move to Hub" button.
+    // If the card IS in the hub, it will now create nothing, removing the "Develop" button.
+    const hubButton = !isInHub
+        ? `<button class="button button-outline" data-action="move-to-hub" data-id="${idea.id}"><i data-lucide="send" class="button-icon"></i> Move to Hub</button>`
+        : ''; // When in the hub, this is now an empty string, removing the button.
 
-    if (editingIdeaId) {
-        // --- WE ARE IN EDIT MODE ---
-        // Find the idea in the array that we're editing
-        const ideaIndex = ideas.findIndex(idea => idea.id === editingIdeaId);
-        if (ideaIndex > -1) {
-            // Update its properties with the new values from the form
-            ideas[ideaIndex].title = title;
-            ideas[ideaIndex].details = details;
-            console.log("Updated idea:", ideas[ideaIndex]);
-        }
-    } else {
-        // --- WE ARE IN ADD MODE (Your original logic) ---
-        const newIdea = {
-            id: `idea-${Date.now()}`,
-            title: title,
-            details: details,
-            status: "New",
-        };
-        ideas.unshift(newIdea);
-    }
-
-    // --- CLEANUP (This runs after both editing and adding) ---
-
-    saveIdeas();      // 1. Save the modified array to localStorage
-    renderIdeas();    // 2. Re-draw the entire list on the screen
-
-    // 3. Reset everything back to "add mode"
-    editingIdeaId = null;
-    newIdeaTitleInput.value = "";
-    newIdeaDetailsInput.value = "";
-    saveIdeaBtn.textContent = "Save Idea";
+    return `
+        <div class="card idea-card" id="idea-${idea.id}">
+            <div class="card-header">
+                <div class="card-header-flex">
+                    <h3 class="card-title">${idea.title}</h3>
+                    <span class="badge ${getStatusBadgeClass(idea.status)}">${idea.status}</span>
+                </div>
+                <div class="card-description">
+                    <p>Updated: ${formatDate(idea.updatedAt)}</p>
+                </div>
+            </div>
+            <div class="card-content">
+                <p class="idea-details">${idea.details || "No details provided."}</p>
+                ${tagsHTML}
+            </div>
+            <div class="card-footer">
+                <button class="button" data-action="edit" data-id="${idea.id}"><i data-lucide="edit-2" class="button-icon"></i> Edit</button>
+                ${hubButton}
+                <button class="button button-destructive" data-action="delete" data-id="${idea.id}"><i data-lucide="trash-2" class="button-icon"></i> Delete</button>
+            </div>
+        </div>`;
 };
+
+    const renderAllLists = () => {
+        if (!ideasGrid) return; // Safety check
+        const sortedIdeas = [...ideas].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        const sortedImplemented = [...implementedIdeas].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+        ideasGrid.innerHTML = sortedIdeas.map(idea => createIdeaCardHTML(idea, false)).join('');
+        implementedIdeasGrid.innerHTML = sortedImplemented.map(idea => createIdeaCardHTML(idea, true)).join('');
+        ideasEmptyState.style.display = ideas.length === 0 ? 'block' : 'none';
+        hubEmptyState.style.display = implementedIdeas.length === 0 ? 'block' : 'none';
+        lucide.createIcons();
+    };
+
+    const resetForm = () => {
+        editingIdeaId = null;
+        newIdeaTitleInput.value = ""; newIdeaDetailsInput.value = ""; newIdeaTagsInput.value = "";
+        formTitle.textContent = "Capture a New Idea";
+        saveIdeaBtn.querySelector('span').textContent = "Save Idea";
+        saveIdeaBtn.querySelector('i').setAttribute('data-lucide', 'plus-square');
+        cancelEditBtn.style.display = 'none'; saveIdeaBtn.style.flexGrow = '1';
+        formCard.classList.remove('editing');
+        refreshIcons();
+    };
+
+    const handleSaveOrUpdateIdea = () => {
+        if (!newIdeaTitleInput) return; // Safety check
+        const title = newIdeaTitleInput.value.trim();
+        if (!title) { showToast("Title Missing", "Please provide a title for your idea.", "destructive"); return; }
+        const now = new Date().toISOString();
+        const tags = newIdeaTagsInput.value.split(',').map(tag => tag.trim()).filter(Boolean);
+        const details = newIdeaDetailsInput.value.trim();
+        if (editingIdeaId) {
+            let ideaToUpdate = ideas.find(i => i.id === editingIdeaId) || implementedIdeas.find(i => i.id === editingIdeaId);
+            if (ideaToUpdate) {
+                ideaToUpdate.title = title; ideaToUpdate.details = details;
+                ideaToUpdate.tags = tags.length > 0 ? tags : undefined;
+                ideaToUpdate.updatedAt = now;
+                showToast("Idea Updated!", `"${title}" has been successfully updated.`);
+            }
+        } else {
+            const newIdea = { id: `idea-${Date.now()}`, title, details, tags: tags.length > 0 ? tags : undefined, status: "New", createdAt: now, updatedAt: now };
+            ideas.push(newIdea);
+            showToast("Idea Saved!", `"${title}" has been captured.`);
+        }
+        resetForm(); saveState(); renderAllLists();
+    };
+
+    const handleStartEditing = (ideaId) => {
+        const ideaToEdit = ideas.find(i => i.id === ideaId) || implementedIdeas.find(i => i.id === ideaId);
+        if (!ideaToEdit || !formCard) return;
+        editingIdeaId = ideaId;
+        newIdeaTitleInput.value = ideaToEdit.title; newIdeaDetailsInput.value = ideaToEdit.details;
+        newIdeaTagsInput.value = (ideaToEdit.tags || []).join(', ');
+        formTitle.textContent = "Editing Idea";
+        saveIdeaBtn.querySelector('span').textContent = "Update Idea";
+        saveIdeaBtn.querySelector('i').setAttribute('data-lucide', 'check-circle');
+        cancelEditBtn.style.display = 'flex'; saveIdeaBtn.style.flexGrow = '0';
+        formCard.classList.add('editing');
+        refreshIcons();
+        formCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    };
+
+    const handleMoveToHub = (ideaId) => {
+        const ideaIndex = ideas.findIndex(i => i.id === ideaId);
+        if (ideaIndex === -1) return;
+        const [ideaToMove] = ideas.splice(ideaIndex, 1);
+        ideaToMove.status = "In Hub"; ideaToMove.updatedAt = new Date().toISOString();
+        implementedIdeas.push(ideaToMove);
+        showToast("Idea Moved", `"${ideaToMove.title}" is now in the Implementation Hub.`);
+        saveState(); renderAllLists();
+    };
 
     const handleDeleteIdea = (ideaId) => {
-        ideas = ideas.filter(idea => idea.id !== ideaId);
-        saveIdeas(); // And also here
-        renderIdeas();
+        let ideaTitle = '';
+        const ideaIndex = ideas.findIndex(i => i.id === ideaId);
+        if (ideaIndex !== -1) {
+            ideaTitle = ideas[ideaIndex].title; ideas.splice(ideaIndex, 1);
+        } else {
+            const implementedIndex = implementedIdeas.findIndex(i => i.id === ideaId);
+            if (implementedIndex !== -1) {
+                ideaTitle = implementedIdeas[implementedIndex].title; implementedIdeas.splice(implementedIndex, 1);
+            }
+        }
+        if (ideaTitle) {
+            showToast("Idea Deleted", `"${ideaTitle}" has been removed.`, "destructive");
+            saveState(); renderAllLists();
+        }
     };
 
     // --- 5. EVENT LISTENERS ---
-
-    // Listener for the main "Save Idea" button
-    if (saveIdeaBtn) {
-        saveIdeaBtn.addEventListener("click", handleSaveIdea);
-    }
-
-    // Listener for the "Enter" key on the title input
-    if (newIdeaTitleInput) {
-        newIdeaTitleInput.addEventListener("keypress", (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault();
-                handleSaveIdea();
+    if(saveIdeaBtn) saveIdeaBtn.addEventListener("click", handleSaveOrUpdateIdea);
+    if(cancelEditBtn) cancelEditBtn.addEventListener("click", resetForm);
+    
+    // This listener is safe because it's on a static parent element
+    const contentArea = document.querySelector('.content-area');
+    if (contentArea) {
+        contentArea.addEventListener('click', (event) => {
+            const button = event.target.closest('button[data-action]');
+            if (!button) return;
+            const { action, id } = button.dataset;
+            if (!action || !id) return;
+            switch (action) {
+                case 'edit': handleStartEditing(id); break;
+                case 'delete': if (confirm("Are you sure you want to delete this idea? This cannot be undone.")) { handleDeleteIdea(id); } break;
+                case 'move-to-hub': handleMoveToHub(id); break;
             }
-        });
-    }
-
-    // Main listener for the entire list to handle clicks on Edit/Delete buttons
-    if (ideaListContainer) {
-        ideaListContainer.addEventListener("click", (e) => {
-            const card = e.target.closest('.card');
-            if (!card) return;
-
-            const ideaId = card.dataset.id;
-
-            // Check if the delete button was clicked
-            if (e.target.closest('.btn-delete')) {
-                if (confirm("Are you sure you want to delete this idea?")) {
-                    handleDeleteIdea(ideaId);
-                }
-            }
-
-           // Check if the edit button was clicked
-        if (e.target.closest('.btn-edit')) {
-          startEditingIdea(ideaId); // <-- THIS IS THE FIX
-        }
+            lucide.createIcons();
         });
     }
 
     // --- 6. INITIALIZATION ---
-    // This is the code that runs when the page first loads.
-    
-    loadIdeas();
-    renderIdeas();
+    loadState();
+    renderAllLists();
+    refreshIcons();
 }
