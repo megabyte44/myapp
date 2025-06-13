@@ -11,7 +11,7 @@ const LOCAL_STORAGE_KEY_GYM_LOGGED_FOOD = 'memoriaGymLoggedFood';
 
 
 
-let tasks = []; // <-- THIS IS THE FIX. Define it here.
+let tasks = []; // <-- THIS IS THE FIX. Define it here
 // AT THE VERY TOP OF SCRIPT.JS
 
 
