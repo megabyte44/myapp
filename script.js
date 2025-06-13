@@ -1,3 +1,141 @@
+/*
+=================================================================
+  MEMORIA APP - CLOUD SYNC LOGIC (PART 1 of 2)
+  This section handles Firebase setup and sync functions.
+=================================================================
+*/
+
+//
+// 1. FIREBASE CONFIGURATION
+// ---------------------------------------------------------------
+// ‼️ PASTE YOUR UNIQUE FIREBASE CONFIGURATION OBJECT HERE ‼️
+//
+const firebaseConfig = {
+  apiKey: "AIzaSy...YOUR_UNIQUE_API_KEY...",
+  authDomain: "your-project-id.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project-id.appspot.com",
+  messagingSenderId: "1234567890",
+  appId: "1:1234567890:web:abcdef123456"
+};
+
+
+//
+// 2. INITIALIZE FIREBASE & GLOBAL SYNC VARIABLES
+// ---------------------------------------------------------------
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
+let currentUserId = null;
+let isCloudDataLoaded = false; // Prevents loops on page reload
+
+
+//
+// 3. DEFINE ALL LOCALSTORAGE KEYS YOUR APP USES
+// ---------------------------------------------------------------
+// An array of all the keys your app uses in localStorage.
+// This is used by the sync functions to know what to save/load.
+const ALL_LOCAL_STORAGE_KEYS = [
+    'memoriaAppToDoTasks',
+    'memoriaAppGymCompletedWorkouts',
+    'memoriaGymCycleConfig',
+    'gymCyclicalWorkoutSplit',
+    'memoriaGymCustomFoods',
+    'memoriaGymProteinIntake',
+    'memoriaGymLoggedFood',
+    'memoriaAppTransactions',
+    'memoriaAppMonthlyBudget',
+    'weeklySchedule',
+    'memoriaVaultAccounts',
+    'memoriaAppSecureNotes',
+    'ideaHubApp_ideas',
+    'ideaHubApp_implementedIdeas'
+];
+
+
+//
+// 4. CORE CLOUD SYNC FUNCTIONS
+// ---------------------------------------------------------------
+async function pushAllDataToCloud() {
+    if (!currentUserId) return;
+    console.log("Saving all local data to the cloud...");
+
+    const dataToPush = {};
+    ALL_LOCAL_STORAGE_KEYS.forEach(key => {
+        const localData = localStorage.getItem(key);
+        if (localData) {
+            try {
+                dataToPush[key] = JSON.parse(localData);
+            } catch (e) {
+                dataToPush[key] = localData; // Fallback for non-JSON
+            }
+        }
+    });
+
+    if (Object.keys(dataToPush).length > 0) {
+        try {
+            // Using { merge: true } is safer as it won't delete fields
+            await db.collection("users").doc(currentUserId).set(dataToPush, { merge: true });
+            console.log("Cloud save successful!");
+        } catch (error) {
+            console.error("Error saving data to cloud:", error);
+        }
+    }
+}
+
+async function pullAllDataFromCloud() {
+    if (!currentUserId || isCloudDataLoaded) return;
+    console.log("Checking cloud for saved data...");
+
+    try {
+        const docRef = db.collection("users").doc(currentUserId);
+        const doc = await docRef.get();
+
+        if (doc.exists) {
+            console.log("Cloud data found. Overwriting local data and refreshing app...");
+            const cloudData = doc.data();
+
+            // Clear local storage first to prevent merging old and new data
+            ALL_LOCAL_STORAGE_KEYS.forEach(key => localStorage.removeItem(key));
+
+            // Populate localStorage with fresh data from the cloud
+            Object.keys(cloudData).forEach(key => {
+                if (ALL_LOCAL_STORAGE_KEYS.includes(key)) {
+                    const dataString = JSON.stringify(cloudData[key]);
+                    localStorage.setItem(key, dataString);
+                }
+            });
+
+            isCloudDataLoaded = true; // Mark data as loaded
+            
+            // Reload the page. This is the simplest way to force your
+            // entire application to re-read from localStorage and update the UI.
+            window.location.reload();
+
+        } else {
+            console.log("No cloud data found for this user. App will use existing local data.");
+            // Since there's no cloud data, we push the user's local data
+            // to the cloud for the very first time.
+            pushAllDataToCloud(); 
+            isCloudDataLoaded = true; // Mark as loaded so we don't check again
+        }
+    } catch (error) {
+        console.error("Error loading data from cloud:", error);
+         isCloudDataLoaded = true; // Prevent trying again on error
+    }
+}
+
+/*
+=================================================================
+  END OF CLOUD SYNC LOGIC (PART 1) - YOUR ORIGINAL CODE STARTS BELOW
+=================================================================
+*/
+
+// Your existing code starts here...
+// const LOCAL_STORAGE_KEY_TASKS = 'memoriaAppToDoTasks';
+// ... etc ...
+
+
 // PASTE THIS AT THE VERY TOP OF SCRIPT.JS
 // AT THE VERY TOP OF SCRIPT.JS
 
@@ -3024,3 +3162,39 @@ function initializeIdeaCapturePage() {
     renderAllLists();
     refreshIcons();
 }
+
+/*
+=================================================================
+  MEMORIA APP - CLOUD SYNC LOGIC (PART 2 of 2)
+  This section triggers the sync functions.
+=================================================================
+*/
+
+// 1. When a user is identified, try to PULL their data from the cloud.
+// This runs automatically when the page loads.
+auth.onAuthStateChanged(user => {
+    if (user) {
+        currentUserId = user.uid;
+        console.log("User authenticated. UID:", currentUserId);
+        // This function will check for cloud data and refresh the app if found.
+        pullAllDataFromCloud();
+    } else {
+        // If no user, sign them in anonymously to get a unique ID.
+        // The onAuthStateChanged will then run AGAIN with the new user,
+        // triggering the pullAllDataFromCloud function.
+        auth.signInAnonymously().catch(error => {
+            console.error("Anonymous sign-in failed:", error);
+        });
+    }
+});
+
+// 2. When the user tries to leave the app, PUSH all their changes to the cloud.
+// This is the "Auto-Save on Exit" feature.
+window.addEventListener('beforeunload', (event) => {
+    console.log("App closing. Triggering final save to cloud...");
+    if (currentUserId) {
+        // This is a "fire-and-forget" push. We don't wait for it to complete
+        // because the browser might close.
+        pushAllDataToCloud();
+    }
+});
