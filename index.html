@@ -14,24 +14,31 @@
         <!--     SIDEBAR (The App Shell)     -->
         <!-- =============================== -->
         <aside class="sidebar">
-            <div class="sidebar-header">
-                <a href="#" class="nav-link" data-page="dashboard-page" style="text-decoration:none; color:inherit; padding: 0;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-7.53 16.59l1.9-1.9A8 8 0 0 1 19.53 6.47"/><path d="m15.53 9.47-1.06-1.06A4 4 0 0 0 12 9a4 4 0 0 0-3.53 2.47l-1.06-1.06A6 6 0 0 1 12 7a6 6 0 0 1 6 6 6 6 0 0 1-2.47 4.53l-1.06-1.06A4 4 0 0 0 16 13a4 4 0 0 0-2.47-3.53Z"/><path d="M12 17a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"/></svg>
-                    <h1>Memoria</h1>
-                </a>
+           <div class="sidebar-header">
+    <!-- The button is now here -->
+    <button class="sidebar-trigger" aria-label="Toggle Sidebar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <a href="#" class="nav-link" data-page="dashboard-page" style="text-decoration:none; color:inherit; padding: 0;">
+        <!-- The original Memoria logo and text are still here -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain-icon lucide-brain"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
+        <h1 class="sidebar-title-text">Memoria</h1>
+    </a>
             </div>
+
             <nav class="sidebar-nav">
                 <!-- Links now point to template IDs -->
-                <a class="nav-link" data-page="dashboard-page">
+                  
+                <a class="nav-link" data-page="dashboard-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-layout-dashboard-icon lucide-layout-dashboard"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
     <ion-icon name="speedometer-outline" style="width: 24px; height: 24px;"></ion-icon>
     <span>Dashboard</span>
 </a>
                 <a class="nav-link" data-page="to-do-list-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg><span>To-Do List</span></a>
-                <a class="nav-link" data-page="expense-tracker-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h9"/><path d="M11 10h5"/><path d="M6 18H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.5"/><path d="M18 12.5a4.5 4.5 0 0 1-9 0 4.5 4.5 0 0 1 9 0Z"/><path d="M16 16.5a1 1 0 0 1-1-1V14a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1.5a1 1 0 0 1-1 1Z"/><path d="M21.4 16.5A2.4 2.4 0 0 0 20 15h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1a2.4 2.4 0 0 0 2.4-2.5Z"/></svg><span>Expense Tracker</span></a>
+                <a class="nav-link" data-page="expense-tracker-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins-icon lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg><span>Expense Tracker</span></a>
                 <a class="nav-link" data-page="daily-planner-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M12 15h.01"/></svg><span>Daily Planner</span></a>
-                <a class="nav-link" data-page="gym-tracker-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.4 6.2 5 5M6.2 14.4l5 5M12 12l9.6 9.6M2.4 2.4l9.6 9.6M18 11.5 12.5 6M6 18l5.5-5.5"></path></svg><span>Gym Tracker</span></a>
-                <a class="nav-link" data-page="password-vault-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M8 12v4"/><path d="M12 8v4"/><path d="m16 8-4 4"/></svg><span>Password Vault</span></a>
-                <a class="nav-link" data-page="secure-note-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14.5 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Z"/><path d="M12 12v6"/></svg><span>Secure Notes</span></a>
+                <a class="nav-link" data-page="gym-tracker-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dumbbell-icon lucide-dumbbell"><path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"/><path d="m2.5 21.5 1.4-1.4"/><path d="m20.1 3.9 1.4-1.4"/><path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"/><path d="m9.6 14.4 4.8-4.8"/></svg><span>Gym Tracker</span></a>
+                <a class="nav-link" data-page="password-vault-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-icon lucide-key"><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/></svg><span>Password Vault</span></a>
+                <a class="nav-link" data-page="secure-note-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-lock-icon lucide-file-lock"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><rect width="8" height="6" x="8" y="12" rx="1"/><path d="M10 12v-2a2 2 0 1 1 4 0v2"/></svg><span>Secure Notes</span></a>
                 <a class="nav-link" data-page="idea-capture-page"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg><span>Idea Capture</span></a>
             </nav>
         </aside>
@@ -40,9 +47,7 @@
         <!-- MAIN CONTENT AREA (The Dynamic Part)  -->
         <!-- ===================================== -->
         <div class="main-wrapper">
-            <header class="main-header">
-                <button class="sidebar-trigger">☰</button>
-            </header>
+           
             <main id="main-content">
                 <!-- Page content will be loaded here by JavaScript -->
             </main>
@@ -71,7 +76,7 @@
                 <!-- Financial Snapshot Card -->
                 <div class="card finance-card">
                     <div class="card-header">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10"></path><path d="M12 17V7"></path><path d="M16 17a4 4 0 0 0-8 0"></path><path d="M3 3v13a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V3"></path></svg></span>
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wallet-icon lucide-wallet"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span>
                         <h2>Financial Snapshot</h2>
                     </div>
                     <div class="card-content">
@@ -87,7 +92,7 @@
                 <!-- To-Do List Card -->
                 <div class="card todo-card">
                     <div class="card-header">
-                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-checks-icon lucide-list-checks"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg></span>
                         <h2>Today's To-Do List</h2>
                     </div>
                     <div class="card-content">
@@ -109,9 +114,7 @@
         <div class="feature-header">
             <div class="feature-icon-wrapper">
                 <!-- ListChecks Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
-                    <path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/><path d="m18 6-4-4-4 4"/><path d="m18 12-4-4-4 4"/>
-                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-list-todo-icon lucide-list-todo"><rect x="3" y="5" width="6" height="6" rx="1"/><path d="m3 17 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
             </div>
             <h1 class="feature-title">To-Do List</h1>
             <p class="feature-description">Organize your tasks, set priorities, and track your progress.</p>
@@ -173,9 +176,9 @@
     <script type="text/template" id="expense-tracker-page">
         <main class="feature-placeholder">
         <header class="feature-header">
-            <div class="icon-wrapper">
-                <!-- PiggyBank Icon SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M8 6h9"/><path d="M11 10h5"/><path d="M6 18H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.5"/><path d="M18 12.5a4.5 4.5 0 0 1-9 0 4.5 4.5 0 0 1 9 0Z"/><path d="M16 16.5a1 1 0 0 1-1-1V14a1 1 0 0 1 1-1h0a1 1 0 0 1 1 1v1.5a1 1 0 0 1-1 1Z"/><path d="M21.4 16.5A2.4 2.4 0 0 0 20 15h-1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1a2.4 2.4 0 0 0 2.4-2.5Z"/></svg>
+            <div class="feature-icon-wrapper">
+                <!-- ListChecks Icon -->
+               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hand-coins-icon lucide-hand-coins"><path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17"/><path d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9"/><path d="m2 16 6 6"/><circle cx="16" cy="9" r="2.9"/><circle cx="6" cy="5" r="3"/></svg>
             </div>
             <h1 class="feature-title">Expense Tracker</h1>
             <p class="feature-description">Track your income, expenses, and manage your budget.</p>
@@ -335,9 +338,9 @@
        
     <main class="feature-placeholder">
         <header class="feature-header">
-            <div class="icon-wrapper">
-                <!-- CalendarClock Icon SVG -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="M17.5 17.5m-5.5 0a5.5 5.5 0 1 0 11 0a5.5 5.5 0 1 0-11 0"/><path d="M17.5 14.5v3.5l2 1"/></svg>
+            <div class="feature-icon-wrapper">
+                <!-- ListChecks Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line><path d="M12 15h.01"/></svg>
             </div>
             <h1 class="feature-title">Daily Planner</h1>
             <p class="feature-description">Manage your schedule, tasks, and time effectively.</p>
@@ -478,9 +481,10 @@
 
      <div class="feature-placeholder">
         <header class="feature-header">
-            <span class="icon-placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m14.4 6.2 5 5M6.2 14.4l5 5M12 12l9.6 9.6M2.4 2.4l9.6 9.6M18 11.5 12.5 6M6 18l5.5-5.5"></path></svg>
-            </span>
+            <div class="feature-icon-wrapper">
+                <!-- ListChecks Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-dumbbell-icon lucide-dumbbell"><path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"/><path d="m2.5 21.5 1.4-1.4"/><path d="m20.1 3.9 1.4-1.4"/><path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"/><path d="m9.6 14.4 4.8-4.8"/></svg>
+            </div>
             <div>
                 <h1>Gym Tracker</h1>
                 <p>Plan your workouts, monitor your nutrition, and track your progress.</p>
@@ -720,68 +724,72 @@
     
     <!-- Template for: idea-capture.html -->
     <script type="text/template" id="idea-capture-page">
-        <main class="feature-placeholder">
-        <div class="feature-header">
-            <div class="feature-icon-wrapper">
-                <!-- Lightbulb Icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feature-icon">
-                    <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path>
-                    <path d="M9 18h6"></path>
-                    <path d="M10 22h4"></path>
-                </svg>
-            </div>
-            <h1 class="feature-title">Idea Capture</h1>
-            <p class="feature-description">Jot down your brilliant ideas and organize them for future implementation.</p>
-        </div>
+        
+        <div id="toast-container"></div>
 
-        <div class="feature-content">
-            <div class="content-wrapper">
-                <!-- New Idea Form -->
-                <section class="card shadow-md">
-                    <header class="card-header">
-                        <h2 class="card-title font-headline text-xl">Capture a New Idea</h2>
-                    </header>
-                    <div class="card-content card-form-content">
-                        <input id="new-idea-title" type="text" class="input" placeholder="Idea Title (e.g., Eco-friendly Packaging Solution)">
-                        <textarea id="new-idea-details" class="textarea" rows="4" placeholder="Describe your idea in more detail..."></textarea>
-                        <button id="save-idea-btn" class="btn btn-lg btn-full-width">
-                            <!-- PlusSquare Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-mr">
-                                <rect width="18" height="18" x="3" y="3" rx="2"></rect>
-                                <path d="M8 12h8"></path>
-                                <path d="M12 8v8"></path>
-                            </svg>
-                            Save Idea
+   <div class="main-container" id="idea-capture-page">
+        <header class="feature-header">
+            <div class="feature-icon-wrapper">
+                <i data-lucide="lightbulb"></i>
+            </div>
+            <h1 class="feature-title">Idea Capture & Hub</h1>
+            <p class="feature-description">Jot down, edit, and organize your ideas. Move them to the hub to track implementation.</p>
+        </header>
+
+        <main class="content-area">
+            <!-- Implementation Hub -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Implementation Hub</h2>
+                    <p class="card-description">Ideas you've moved here for active development or further planning.</p>
+                </div>
+                <div class="card-content">
+                    <div id="implemented-ideas-grid" class="ideas-grid">
+                        <!-- Implemented ideas will be injected here by JS -->
+                    </div>
+                     <p id="hub-empty-state" class="empty-state-text">
+                        No ideas in the hub yet. Move an idea to get started.
+                    </p>
+                </div>
+            </div>
+
+            <!-- New Idea Form -->
+            <div class="card" id="idea-form-card">
+                <div class="card-header">
+                    <h2 id="form-title" class="card-title">Capture a New Idea</h2>
+                </div>
+                <div class="card-content form-content">
+                    <input type="text" id="new-idea-title" placeholder="Idea Title (e.g., Eco-friendly Packaging Solution)" class="input">
+                    <textarea id="new-idea-details" placeholder="Describe your idea in more detail..." rows="3" class="textarea"></textarea>
+                    <div class="input-with-icon">
+                        <i data-lucide="tag" class="input-icon"></i>
+                        <input type="text" id="new-idea-tags" placeholder="Tags (comma-separated, e.g., project, tech)" class="input pl-10">
+                    </div>
+                    <div class="form-actions">
+                        <button id="save-idea-btn" class="button button-lg button-primary w-full">
+                            <i data-lucide="plus-square" class="button-icon"></i> 
+                            <span>Save Idea</span>
+                        </button>
+                        <button id="cancel-edit-btn" class="button button-lg button-secondary w-full" style="display: none;">
+                            Cancel Edit
                         </button>
                     </div>
-                </section>
-
-                <!-- Idea List -->
-                <section>
-                    <h2 class="list-title font-headline text-2xl">Your Ideas</h2>
-                    <div id="idea-list-container" class="idea-grid">
-                        <!-- Idea cards will be dynamically inserted here by JavaScript -->
-                    </div>
-                    <div id="no-ideas-message" class="empty-state" style="display: none;">
-                        <p>No ideas captured yet. Let your creativity flow!</p>
-                    </div>
-                </section>
-                
-                <!-- Implementation Hub (Conceptual) -->
-                <section class="card shadow-md">
-                    <header class="card-header">
-                        <h2 class="card-title font-headline text-xl">Implementation Hub</h2>
-                        <p class="card-description">Selected ideas ready for development will appear here.</p>
-                    </header>
-                    <div class="card-content">
-                        <p class="placeholder-text">
-                            Transfer ideas to implementation to track their progress from concept to reality.
-                        </p>
-                    </div>
-                </section>
+                </div>
             </div>
-        </div>
-    </main>
+
+            <!-- Your Ideas List -->
+            <div>
+                <h2 class="section-title">Your Ideas</h2>
+                <div id="ideas-grid" class="ideas-grid">
+                    <!-- New ideas will be injected here by JS -->
+                </div>
+                 <div id="ideas-empty-state" class="empty-state-text-wrapper">
+                    <p class="empty-state-text">No ideas captured yet. Let your creativity flow!</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
     </script>
     
     <!-- Template for: Password vault.html -->
@@ -791,8 +799,9 @@
 
     <div class="main-container">
         <header class="feature-header">
-            <div class="icon-wrapper">
-                <i data-lucide="key-square"></i>
+           <div class="feature-icon-wrapper">
+                <!-- ListChecks Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-key-icon lucide-key"><path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/></svg>
             </div>
             <h1>Password Vault</h1>
             <p>Securely store and manage your passwords and sensitive information.</p>
