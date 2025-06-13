@@ -10,14 +10,15 @@
 // ---------------------------------------------------------------
 // ‼️ PASTE YOUR UNIQUE FIREBASE CONFIGURATION OBJECT HERE ‼️
 //
-const firebaseConfig = {
-  apiKey: "AIzaSy...YOUR_UNIQUE_API_KEY...",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "1234567890",
-  appId: "1:1234567890:web:abcdef123456"
-};
+  const firebaseConfig = {
+    apiKey: "AIzaSyDiICYEkGo52Sw5nybHLrOAG5hbTiQY_-4",
+    authDomain: "memoria-5db64.firebaseapp.com",
+    projectId: "memoria-5db64",
+    storageBucket: "memoria-5db64.firebasestorage.app",
+    messagingSenderId: "828526817933",
+    appId: "1:828526817933:web:554948f6fdc3b595cbe8c4",
+    measurementId: "G-PK5GDR099Z"
+  };
 
 
 //
