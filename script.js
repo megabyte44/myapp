@@ -30,6 +30,30 @@ let currentDisplayMonth = new Date();
 // --- END OF NEW VARIABLES ---
 
 // ... other global constants ...
+// ADD THIS ENTIRE FUNCTION
+function navigateToPage(pageId) {
+    const link = document.querySelector(`.nav-link[data-page="${pageId}"]`);
+    if (link) {
+        // De-select all other links
+        document.querySelectorAll('.sidebar-nav .nav-link').forEach(l => l.classList.remove('active'));
+        
+        // Select and trigger a click on the target link
+        link.classList.add('active');
+        link.click(); 
+
+        // On mobile, also close the sidebar after navigation
+        const sidebar = document.querySelector('.sidebar');
+        if (sidebar && sidebar.classList.contains('open')) {
+            sidebar.classList.remove('open');
+            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.remove('open');
+            }
+        }
+    } else {
+        console.error(`Navigation failed: Link for page "${pageId}" not found.`);
+    }
+}
 function loadScript(src, callback) {
     // This function checks if a script (like Lucide) is already loaded.
     const existingScript = document.querySelector(`script[src="${src}"]`);
@@ -269,11 +293,38 @@ function initializeDashboardPage() {
             const div = document.createElement('div');
             div.className = 'todo-item';
             // Use a unique ID for the dashboard checkbox to avoid conflicts
-            div.innerHTML = `<input type="checkbox" id="dash-task-${task.id}" disabled><label for="dash-task-${task.id}">${task.text}</label><span class="priority-badge ${task.priority}">${task.priority}</span>`;
+            div.innerHTML = `<input type="checkbox" id="dash-task-${task.id}" ${task.completed ? 'checked' : ''}><label for="dash-task-${task.id}">${task.text}</label><span class="priority-badge ${task.priority}">${task.priority}</span>`;
             todoListContainer.appendChild(div);
         });
     };
+        // --- 4a. EVENT LISTENERS ---
+    document.getElementById('view-planner-btn')?.addEventListener('click', () => navigateToPage('daily-planner-page'));
+    document.getElementById('view-tracker-btn')?.addEventListener('click', () => navigateToPage('expense-tracker-page'));
+    document.getElementById('view-tasks-btn')?.addEventListener('click', () => navigateToPage('to-do-list-page'));
+    document.getElementById('fab-quick-idea')?.addEventListener('click', () => navigateToPage('idea-capture-page'));
 
+    // Enable Toggling To-Do Items
+    if (todoListContainer) {
+        todoListContainer.addEventListener('change', (e) => {
+            if (e.target.matches('input[type="checkbox"]')) {
+                const taskId = e.target.id.replace('dash-task-', '');
+                
+                // We need the full task list, not just the filtered dashboard one
+                const allTasks = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_TASKS) || '[]');
+                const masterTaskIndex = allTasks.findIndex(t => t.id === taskId);
+                
+                if (masterTaskIndex > -1) {
+                    allTasks[masterTaskIndex].completed = e.target.checked;
+                    localStorage.setItem(LOCAL_STORAGE_KEY_TASKS, JSON.stringify(allTasks));
+                }
+
+                // Refresh just the todo list on the dashboard
+                const updatedTodoItems = allTasks.filter(task => !task.completed).slice(0, 5);
+                todoItems = updatedTodoItems; // Update the local state
+                renderTodoList(); // Re-render only this component
+            }
+        });
+    }
     // --- 5. INITIALIZATION CALLS ---
     renderGreeting();
     renderPlan();
@@ -990,16 +1041,37 @@ function initializeDailyPlannerPage() {
     });
     };
 
-    const renderTemplateList = (day) => {
-        if (!templateListEl) return;
+     const renderTemplateList = (day) => {
         templateListEl.innerHTML = '';
         const templateSchedule = weeklySchedule[day] || [];
-        if (templateSchedule.length === 0) { /* ... (rest of function is fine) ... */ }
-        templateSchedule.forEach(item => { /* ... (rest of function is fine) ... */ });
+
+        if (templateSchedule.length === 0) {
+            templateListEl.innerHTML = `<p class="empty-list-message">No items in ${day}'s template.</p>`;
+            return;
+        }
+
+        templateSchedule.forEach(item => {
+             const itemEl = document.createElement('div');
+             itemEl.className = 'schedule-item';
+             itemEl.innerHTML = `
+                <div class="schedule-item-details">
+                    <span class="time">${item.startTime} - ${item.endTime}</span>: ${item.title}
+                    ${item.tag ? `<span class="schedule-item-tag">${item.tag}</span>` : ''}
+                </div>
+                <button class="button button-ghost delete-btn" data-item-id="${item.id}" title="Delete item from template">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+                </button>
+            `;
+            templateListEl.appendChild(itemEl);
+        });
+
         document.querySelectorAll('#template-list .delete-btn').forEach(btn => {
-            btn.addEventListener('click', () => handleDeleteItem(day, btn.dataset.itemId, true));
+            btn.addEventListener('click', () => {
+                handleDeleteItem(day, btn.dataset.itemId, true);
+            });
         });
     };
+    
     
     const updateUIForSelectedDay = () => {
         if (!scheduleDayTitleEl || !addItemTitleEl) return;
@@ -1154,6 +1226,7 @@ function initializeDailyPlannerPage() {
     });
     if (closeDialogBtn) closeDialogBtn.addEventListener('click', () => {
         if (templateDialog) templateDialog.style.display = 'none';
+        updateUIForSelectedDay();
     });
     if (templateDialog) templateDialog.addEventListener('click', (e) => {
         if (e.target === templateDialog) templateDialog.style.display = 'none';
@@ -1250,7 +1323,14 @@ const customFoodItemsList = manageFoodDialog.querySelector('#custom-food-items-l
     const LOCAL_STORAGE_KEY_COMPLETED_WORKOUTS = 'memoriaAppGymCompletedWorkouts';
 // --- Add these three helper functions inside initializeGymTracker ---
 // Add this new save function inside initializeGymTracker
-
+const saveWorkoutSplit = () => {
+    try {
+        localStorage.setItem(LOCAL_STORAGE_KEY_GYM_SPLIT, JSON.stringify(cyclicalWorkoutSplit));
+        console.log("SUCCESS: Workout split saved to localStorage.");
+    } catch (e) {
+        console.error("Failed to save workout split.", e);
+    }
+};
 const saveCustomFoodItems = () => {
     try {
         // Use the correct key we defined at the top of the file
@@ -2668,10 +2748,7 @@ function initializeSecureNotePage() {
 /**
  * Initializes all functionality for the Idea Capture page.
  */
-// ==========================================================
-//  REPLACE your entire initializeIdeaCapturePage function
-//  with this complete and corrected version.
-// ==========================================================
+
 
 function initializeIdeaCapturePage() {
     console.log("Initializing Idea Capture Page...");
@@ -2700,12 +2777,11 @@ function initializeIdeaCapturePage() {
 
     const loadIdeas = () => {
         try {
-            console.log("%c ACTION: Loading ideas...", "color: orange; font-weight: bold;");
             const storedIdeas = localStorage.getItem(LOCAL_STORAGE_KEY_IDEAS);
             if (storedIdeas) {
-                console.log("FOUND stored data:", storedIdeas);
+                console.log("FOUND stored data:");
                 ideas = JSON.parse(storedIdeas);
-                console.log("%c SUCCESS: Ideas loaded and parsed.", "color: green;");
+                
             } else {
                 console.log("INFO: No saved ideas found. Using initial sample data.");
                 ideas = [...initialSampleIdeas];
