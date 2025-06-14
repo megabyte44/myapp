@@ -3131,3 +3131,183 @@ body.sidebar-collapsed .sidebar-title-text {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+/* Style for completed To-Do tasks */
+.task-label.completed {
+    text-decoration: line-through;
+    color: #888; /* Optional: Makes the text a lighter grey */
+    font-style: italic; /* Optional: A nice touch for completed items */
+}
+
+/* Style for the delete button (if you haven't added this already) */
+.delete-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #aaa;
+    padding: 4px;
+}
+.delete-btn:hover {
+    color: #d9534f; /* Red on hover */
+}
+/* ================================================== */
+/*  DEFINITIVE Styles for Password Vault Card Layout  */
+/* ================================================== */
+
+/* This creates the horizontal, wrapping grid for each category */
+.accounts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 1.5rem;
+}
+
+/* Styles for the individual password card */
+.credential-card {
+    background-color: #fff;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card Header: Title and Timestamp */
+.credential-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.credential-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.credential-timestamp {
+    font-size: 0.8rem;
+    color: #6b7280;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* The divider line */
+.credential-divider {
+    border: none;
+    height: 1px;
+    background-color: #f3f4f6;
+    margin: 1rem 0;
+}
+
+/* Card Body: Username, Password, etc. */
+.credential-card-body {
+    flex-grow: 1; /* Makes the body expand to fill space */
+    min-height: 60px;
+    color: #4b5563;
+}
+.credential-card-body p {
+    margin-bottom: 0.5rem;
+}
+
+/* Card Footer: Buttons */
+.credential-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f3f4f6;
+    margin-top: auto; /* Pushes the footer to the bottom */
+}
+
+.credential-card-footer .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    font-weight: 600;
+    cursor: pointer;
+}
+.credential-card-footer .btn-dark {
+    background-color: #111827;
+    color: #fff;
+}
+.credential-card-footer .btn-danger {
+    background-color: #ef4444;
+    color: #fff;
+}
+/* ========================================================== */
+/*  CSS for Horizontal Scrolling Layout (Keeps Original Design) */
+/* ========================================================== */
+
+/* This targets the container that holds the cards for one category. */
+/* Your JS already creates this with the class 'accounts-grid'. */
+.accounts-grid {
+    /* 1. Use Flexbox to arrange items in a row. */
+    display: flex;
+
+    /* 2. Prevent cards from wrapping to a new line. */
+    flex-wrap: nowrap;
+
+    /* 3. Show a horizontal scrollbar ONLY if the content overflows. */
+    overflow-x: auto;
+    
+    /* 4. Add space between the cards in the row. */
+    gap: 1.5rem;
+
+    /* 5. Add some padding to the bottom for the scrollbar. */
+    padding-bottom: 1rem;
+}
+
+/* This targets your original, full-width credential cards. */
+.card.display-card {
+    /* 1. Tell the card not to shrink to fit. */
+    flex-shrink: 0;
+
+    /* 2. Set the width of each card. '90%' makes it almost fill the screen. */
+    /* Adjust this value if you want the cards to be wider or narrower. */
+    width: 90%;
+
+    /* 3. Optional: Set a max-width for very large screens. */
+    max-width: 600px;
+}
+
+/* Styles for the To-Do item on the Dashboard */
+.dashboard-container .todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.dashboard-container .todo-item-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* General styles for all priority badges */
+.priority-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* Specific colors for each priority level */
+.badge-high {
+    background-color: #fbecec; /* Light red */
+    color: #c53030;
+}
+.badge-medium {
+    background-color: #fefcbf; /* Light yellow */
+    color: #b7791f;
+}
+.badge-low {
+    background-color: #ebf8ff; /* Light blue */
+    color: #3182ce;
+}
