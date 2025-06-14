@@ -11,7 +11,7 @@ const LOCAL_STORAGE_KEY_GYM_LOGGED_FOOD = 'memoriaGymLoggedFood';
 
 
 
-let tasks = []; // <-- THIS IS THE FIX. Define it here
+let tasks = []; // <-- THIS IS THE FIX. Define it here.
 // AT THE VERY TOP OF SCRIPT.JS
 
 
@@ -328,8 +328,13 @@ function initializeDashboardPage() {
             const div = document.createElement('div');
             div.className = 'todo-item';
             // Use a unique ID for the dashboard checkbox to avoid conflicts
-            div.innerHTML = `<input type="checkbox" id="dash-task-${task.id}" ${task.completed ? 'checked' : ''}><label for="dash-task-${task.id}">${task.text}</label><span class="priority-badge ${task.priority}">${task.priority}</span>`;
-            todoListContainer.appendChild(div);
+            div.innerHTML = `
+            <div class="todo-item-main">
+                <input type="checkbox" id="dash-task-${task.id}" ${task.completed ? 'checked' : ''}>
+                <label for="dash-task-${task.id}" class="${task.completed ? 'completed' : ''}">${task.text}</label>
+            </div>
+            <span class="priority-badge badge-${task.priority}">${task.priority}</span>
+        `;todoListContainer.appendChild(div);
         });
     };
         // --- 4a. EVENT LISTENERS ---
@@ -429,44 +434,36 @@ function initializeToDoListPage() {
     /**
      * Renders all tasks to the DOM.
      */
-    const renderTasks = () => {
-        taskListContainer.innerHTML = ''; // Clear existing tasks
+  const renderTasks = () => {
+    taskListContainer.innerHTML = '';
+    if (tasks.length === 0) {
+        emptyStateMessage.style.display = 'block';
+    } else {
+        emptyStateMessage.style.display = 'none';
+        tasks.forEach(task => {
+            const taskElement = document.createElement('div');
+            taskElement.className = 'task-item';
+            taskElement.setAttribute('data-task-id', task.id);
 
-        if (tasks.length === 0) {
-            emptyStateMessage.style.display = 'block';
-        } else {
-            emptyStateMessage.style.display = 'none';
-            tasks.forEach(task => {
-                const taskElement = document.createElement('div');
-                taskElement.className = 'task-item';
-                taskElement.setAttribute('data-task-id', task.id);
+            const formattedDate = new Date(task.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
 
-                const formattedDate = new Date(task.date).toLocaleDateString(undefined, {
-                    year: 'numeric', month: 'short', day: 'numeric'
-                });
-
-                taskElement.innerHTML = `
-                    <!-- GripVertical Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="drag-handle">
-                        <circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/>
-                    </svg>
-                    <input type="checkbox" id="task-${task.id}" class="task-checkbox" ${task.completed ? 'checked' : ''}>
-                    <div class="task-text-content">
-                        <label for="task-${task.id}" class="task-label ${task.completed ? 'completed' : ''}">${task.text}</label>
-                        <p class="task-date">Due: ${formattedDate}</p>
-                    </div>
-                    <span class="priority-badge badge-${task.priority}">${task.priority}</span>
-                    <button class="btn btn-ghost btn-icon delete-btn" title="Delete Task">
-                        <!-- Trash2 Icon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="no-pointer-events">
-                            <path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>
-                        </svg>
-                    </button>
-                `;
-                taskListContainer.appendChild(taskElement);
-            });
-        }
-    };
+            // This HTML includes a 'completed' class on the label if task.completed is true
+            taskElement.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="drag-handle"><circle cx="9" cy="12" r="1"/><circle cx="9" cy="5" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="19" r="1"/></svg>
+                <input type="checkbox" id="task-${task.id}" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                <div class="task-text-content">
+                    <label for="task-${task.id}" class="task-label ${task.completed ? 'completed' : ''}">${task.text}</label>
+                    <p class="task-date">Due: ${formattedDate}</p>
+                </div>
+                <span class="priority-badge badge-${task.priority}">${task.priority}</span>
+                <button class="btn btn-ghost btn-icon delete-btn" title="Delete Task">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                </button>
+            `;
+            taskListContainer.appendChild(taskElement);
+        });
+    }
+};
 
     /**
      * Adds a new task to the list.
@@ -494,51 +491,45 @@ function initializeToDoListPage() {
         newTaskTextInput.value = '';
         renderTasks();
 
-        showToast({
-            title: "Task Added",
-            description: `"${newTask.text}" has been added to your list.`,
-        });
+        
     };
     
     /**
      * Handles clicks within the task list for toggling or deleting.
      * @param {Event} e The click event.
      */
-    const handleTaskListClick = (e) => {
-        const taskItem = e.target.closest('.task-item');
-        if (!taskItem) return;
-        
-        const taskId = taskItem.getAttribute('data-task-id');
-        const taskIndex = tasks.findIndex(t => t.id === taskId);
-        if (taskIndex === -1) return;
-        
-        // Handle checkbox toggle
-        if (e.target.matches('.task-checkbox')) {
-            const task = tasks[taskIndex];
-            task.completed = !task.completed;
-            const newStatus = task.completed ? "Completed" : "Marked Incomplete";
-            
-            saveTasksToLocalStorage(tasks);
-            addLogEntry("To-Do List", `Task ${newStatus}`, `"${task.text}"`);
-            renderTasks(); // Re-render to update styles
-        }
-        
-        // Handle delete button click
-        if (e.target.closest('.delete-btn')) {
-            const taskToDelete = tasks[taskIndex];
-            tasks.splice(taskIndex, 1); // Remove the task
-            
-            saveTasksToLocalStorage(tasks);
-            addLogEntry("To-Do List", "Task Deleted", `"${taskToDelete.text}"`);
-            renderTasks();
+   const handleTaskListClick = (e) => {
+    const taskItem = e.target.closest('.task-item');
+    if (!taskItem) return;
 
-            showToast({
-                title: "Task Deleted",
-                description: `"${taskToDelete.text}" has been removed.`,
-            });
-        }
-    };
+    const taskId = taskItem.getAttribute('data-task-id');
+    const taskIndex = tasks.findIndex(t => t.id === taskId);
+    if (taskIndex === -1) return;
 
+    // --- Action 1: Handle Checkbox Click ---
+    if (e.target.matches('.task-checkbox')) {
+        const task = tasks[taskIndex];
+        // Toggle the completed status
+        task.completed = !task.completed;
+        // Save the change
+        saveTasksToLocalStorage(tasks);
+        // Re-render the list to apply the 'completed' class and strikethrough style
+        renderTasks(); 
+    }
+    
+    // --- Action 2: Handle Delete Button Click ---
+    if (e.target.closest('.delete-btn')) {
+        const taskToDelete = tasks[taskIndex];
+        // Remove the task from the data array
+        tasks.splice(taskIndex, 1);
+        // Save the change
+        saveTasksToLocalStorage(tasks);
+        addLogEntry("To-Do List", "Task Deleted", `"${taskToDelete.text}"`);
+        // Re-render the list to show the item is gone
+        renderTasks();
+        showToast({ title: "Task Deleted", description: `"${taskToDelete.text}" removed.` });
+    }
+};
     // --- INITIALIZATION ---
 
     const initializeApp = () => {
@@ -912,7 +903,7 @@ const startEditingTransaction = (transactionId) => {
  * Initializes all functionality for the Daily Planner page.
  */
 function initializeDailyPlannerPage() {
-    console.log("Attempting to initialize Daily Planner Page...");
+    console.log("Initializing Daily Planner Page...");
 
     // --- DOM ELEMENT SELECTORS with Safety Checks ---
     const loadingStateEl = document.getElementById('loading-state'); // Corrected ID from your HTML
@@ -1239,8 +1230,6 @@ function initializeDailyPlannerPage() {
             // Hide loader and show the correct content wrapper
             loadingStateEl.style.display = 'none';
             plannerContentWrapperEl.style.display = 'grid'; // Use the correct variable
-            console.log("Daily Planner content is now visible.");
-
         }, 10); // A very small delay is enough.
     };
 
@@ -1272,13 +1261,13 @@ function initializeDailyPlannerPage() {
 }
 
 function initializeGymTracker() {
-console.log("Attempting to initialize Gym Tracker Page...");
+console.log("Initializing Gym Tracker Page...");
 
     // --- DOM ELEMENT SELECTORS (Corrected Version) ---
 
     // Elements inside the main gym tracker content
     const pageWrapper = document.querySelector('#main-content .feature-placeholder');
-    console.log("pageWrapper element:", pageWrapper);
+
     if (!pageWrapper) {
         console.error("Gym Tracker Fatal Error: The main '.feature-placeholder' container was not found.");
         return;
@@ -1312,7 +1301,6 @@ const calendarPrevBtn = pageWrapper.querySelector('#calendar-prev-month');
 const calendarNextBtn = pageWrapper.querySelector('#calendar-next-month');
 const openCycleConfigDialogBtn = pageWrapper.querySelector('#open-cycle-config-dialog');
 const openWorkoutPlanDialogBtn = pageWrapper.querySelector('#open-workout-plan-dialog');
-console.log("openWorkoutPlanDialogBtn element:", openWorkoutPlanDialogBtn);
 const openManageFoodDialogBtn = pageWrapper.querySelector('#open-manage-food-dialog');
 
 // --- Dialogs (These are top-level, so we use document.getElementById) ---
@@ -1720,7 +1708,7 @@ const getWorkoutDayInfoForDate = (date) => {
         }
         proteinIntakes.push({ id: `protein-${Date.now()}`, amount, timestamp: new Date() });
         proteinAmountInput.value = "";
-        showToast(`${amount}g of protein added.`);
+       
         saveProteinIntake();
         renderProteinTracker();
     };
@@ -2019,7 +2007,7 @@ const onCloseCycleConfigDialog = () => {
             if (loaderContainer) loaderContainer.style.display = 'none';
             if (gymMainContent) gymMainContent.classList.remove('hidden');
             renderAll();
-            console.log("Gym Tracker Initialized Successfully.");
+           
         }, 10);
     }
 
@@ -2146,91 +2134,119 @@ function initializePasswordVaultPage() {
 
 
     // --- RENDER FUNCTION ---
-    const renderAccounts = () => {
-        accountsListContainer.innerHTML = ''; // Clear existing content
-        
-        if (accounts.length === 0) {
-            accountsListContainer.innerHTML = `
-                <div style="text-align: center; padding: 2.5rem 0; color: var(--muted-foreground);">
-                    Your vault is empty. Add your first credential securely.
-                </div>
-            `;
-            return;
-        }
+   // This is the corrected renderAccounts function.
 
-        const sortedAccounts = [...accounts].sort((a, b) => a.name.localeCompare(b.name));
+const renderAccounts = () => {
+    // Safety check for the main container
+    if (!accountsListContainer) {
+        console.error("Vault Error: Cannot find 'accounts-list-container'");
+        return; 
+    }
+    accountsListContainer.innerHTML = ''; 
 
-        accountCategories.forEach(category => {
-            const filteredAccounts = sortedAccounts.filter(acc => acc.category === category);
-            if (filteredAccounts.length === 0) return;
+    if (accounts.length === 0) {
+        accountsListContainer.innerHTML = '<p class="empty-state">Your vault is empty.</p>';
+        return;
+    }
+    
+    // Group accounts by category (your logic here is good)
+    const groupedAccounts = accounts.reduce((acc, account) => {
+        const category = account.category || 'Other';
+        if (!acc[category]) acc[category] = [];
+        acc[category].push(account);
+        return acc;
+    }, {});
+    
+    const sortedCategories = Object.keys(groupedAccounts).sort();
 
-            const categoryGroup = document.createElement('div');
-            categoryGroup.className = 'category-group';
-            categoryGroup.innerHTML = `<h2>${category}</h2>`;
-            
-            const accountsGrid = document.createElement('div');
-            accountsGrid.className = 'accounts-grid';
+    // Loop through each category NAME
+    sortedCategories.forEach(category => {
+        // Create the container for the entire section (Heading + Grid)
+        const categorySection = document.createElement('div');
+        categorySection.className = 'category-section';
 
-            filteredAccounts.forEach(account => {
-                const card = document.createElement('div');
-                card.className = 'card display-card';
-                card.dataset.accountId = account.id;
+        // Create the heading element
+        const categoryHeading = document.createElement('h2');
+        categoryHeading.className = 'category-heading';
+        categoryHeading.textContent = category;
 
-                const getIcon = (cat) => {
-                    switch(cat) {
-                        case 'Banking': return '<i data-lucide="landmark"></i>';
-                        case 'Website': return '<i data-lucide="globe"></i>';
-                        case 'Social Media': return '<i data-lucide="users"></i>';
-                        default: return '';
-                    }
-                }
-                
-                const renderSensitiveInput = (id, fieldName, fieldValue) => `
-                    <div class="sensitive-input-wrapper">
-                        <input type="password" class="input" value="••••••••••" readonly data-field-name="${fieldName}">
-                        <button class="button ghost" data-action="toggle-visibility" data-field="${fieldName}">
-                            <i data-lucide="eye"></i>
-                        </button>
-                        <button class="button ghost" data-action="copy" data-field="${fieldName}" data-value="${fieldValue || ''}">
-                            <i data-lucide="copy"></i>
-                        </button>
-                    </div>`;
+        // Create the grid container for the cards
+        const accountsGrid = document.createElement('div');
+        accountsGrid.className = 'accounts-grid'; // Use the class your CSS targets
 
-                card.innerHTML = `
-                    <div class="card-header" style="padding-bottom: 0.75rem;">
-                        <div>
-                            <h3 class="card-title">${getIcon(account.category)} ${account.name}</h3>
-                            ${account.category !== 'Banking' && account.username ? `<p class="card-description">Username: ${account.username}</p>` : ''}
-                            ${account.website ? `<p class="card-description">Website: <a href="${account.website}" target="_blank" rel="noopener noreferrer">${account.website}</a></p>` : ''}
-                            <p class="card-description">Last Updated: ${account.lastUpdated}</p>
-                        </div>
-                    </div>
-                    <div class="card-content display-card-content">
-                        ${account.category === 'Banking' ? `
-                            ${account.accountNumber ? `<p><strong>Acc No:</strong> ${account.accountNumber}</p>` : ''}
-                            ${account.ifscCode ? `<p><strong>IFSC:</strong> ${account.ifscCode}</p>` : ''}
-                            ${account.upiPin ? `<div><strong style="font-size:0.75rem;">UPI PIN:</strong>${renderSensitiveInput(account.id, 'upiPin', account.upiPin)}</div>` : ''}
-                            ${account.netbankingId ? `<p class="border-t-dashed"><strong>Netbanking ID:</strong> ${account.netbankingId}</p>` : ''}
-                            ${account.mpin ? `<div><strong style="font-size:0.75rem;">MPIN:</strong>${renderSensitiveInput(account.id, 'mpin', account.mpin)}</div>` : ''}
-                            ${account.netbankingPassword ? `<div><strong style="font-size:0.75rem;">NB Password:</strong>${renderSensitiveInput(account.id, 'netbankingPassword', account.netbankingPassword)}</div>` : ''}
-                            ${account.transactionPassword ? `<div><strong style="font-size:0.75rem;">Txn Password:</strong>${renderSensitiveInput(account.id, 'transactionPassword', account.transactionPassword)}</div>` : ''}
-                        ` : `
-                            ${account.password ? `<div><strong style="font-size:0.75rem;">Password:</strong>${renderSensitiveInput(account.id, 'password', account.password)}</div>` : ''}
-                        `}
-                    </div>
-                    <div class="card-footer">
-                        <button class="button outline" data-action="edit"><i data-lucide="edit"></i> Edit</button>
-                        <button class="button destructive" data-action="delete"><i data-lucide="trash-2"></i> Delete</button>
-                    </div>
-                `;
-                accountsGrid.appendChild(card);
-            });
-            categoryGroup.appendChild(accountsGrid);
-            accountsListContainer.appendChild(categoryGroup);
+        // Loop through each ACCOUNT OBJECT in the current category
+        groupedAccounts[category].forEach(account => {
+            // Your 'createAccountCard' logic is complex, so let's call it here.
+            // We assume it's defined elsewhere in your function.
+            const card = createAccountCard(account); // This creates the card div
+            accountsGrid.appendChild(card); // Append the card to ITS grid
         });
-        
-        lucide.createIcons();
-    };
+
+        // *** THE CRITICAL FIX IS HERE ***
+        // Append the heading and the grid to the section container
+        categorySection.appendChild(categoryHeading);
+        categorySection.appendChild(accountsGrid);
+
+        // Append the entire completed section to the main page container
+        accountsListContainer.appendChild(categorySection);
+    });
+    
+    // Refresh the icons after all HTML has been added
+    lucide.createIcons();
+};
+
+// You need a separate 'createAccountCard' function.
+// Let's create it from your existing render logic.
+const createAccountCard = (account) => {
+    const card = document.createElement('div');
+    card.className = 'card display-card';
+    card.dataset.accountId = account.id;
+
+    const getIcon = (cat) => {
+        switch(cat) {
+            case 'Banking': return '<i data-lucide="landmark"></i>';
+            case 'Website': return '<i data-lucide="globe"></i>';
+            case 'Social Media': return '<i data-lucide="users"></i>';
+            default: return '<i data-lucide="shield-question"></i>';
+        }
+    }
+    
+    const renderSensitiveInput = (fieldName, fieldValue) => `
+        <div class="sensitive-input-wrapper">
+            <input type="password" class="input" value="••••••••••" readonly data-field-name="${fieldName}">
+            <button class="button ghost" data-action="toggle-visibility" data-field="${fieldName}"><i data-lucide="eye"></i></button>
+            <button class="button ghost" data-action="copy" data-field="${fieldName}" data-value="${fieldValue || ''}"><i data-lucide="copy"></i></button>
+        </div>`;
+
+    card.innerHTML = `
+        <div class="card-header">
+            <div>
+                <h3 class="card-title">${getIcon(account.category)} ${account.name}</h3>
+                ${account.category !== 'Banking' && account.username ? `<p class="card-description">Username: ${account.username}</p>` : ''}
+                ${account.website ? `<p class="card-description">Website: <a href="${account.website}" target="_blank" rel="noopener noreferrer">${account.website}</a></p>` : ''}
+                <p class="card-description">Last Updated: ${account.lastUpdated}</p>
+            </div>
+        </div>
+        <div class="card-content display-card-content">
+            ${account.category === 'Banking' ? `
+                ${account.accountNumber ? `<p><strong>Acc No:</strong> ${account.accountNumber}</p>` : ''}
+                ${account.ifscCode ? `<p><strong>IFSC:</strong> ${account.ifscCode}</p>` : ''}
+                ${account.upiPin ? `<div><strong>UPI PIN:</strong>${renderSensitiveInput('upiPin', account.upiPin)}</div>` : ''}
+                ${account.netbankingId ? `<p><strong>Netbanking ID:</strong> ${account.netbankingId}</p>` : ''}
+                ${account.mpin ? `<div><strong>MPIN:</strong>${renderSensitiveInput('mpin', account.mpin)}</div>` : ''}
+                ${account.netbankingPassword ? `<div><strong>NB Password:</strong>${renderSensitiveInput('netbankingPassword', account.netbankingPassword)}</div>` : ''}
+                ${account.transactionPassword ? `<div><strong>Txn Password:</strong>${renderSensitiveInput('transactionPassword', account.transactionPassword)}</div>` : ''}
+            ` : `
+                ${account.password ? `<div><strong>Password:</strong>${renderSensitiveInput('password', account.password)}</div>` : ''}
+            `}
+        </div>
+        <div class="card-footer">
+            <button class="button outline" data-action="edit"><i data-lucide="edit"></i> Edit</button>
+            <button class="button destructive" data-action="delete"><i data-lucide="trash-2"></i> Delete</button>
+        </div>
+    `;
+    return card;
+};
 
     // --- EVENT HANDLERS ---
     
